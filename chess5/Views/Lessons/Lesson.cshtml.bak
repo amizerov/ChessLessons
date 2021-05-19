@@ -1,0 +1,80 @@
+﻿@using chess5.Models;
+@model chess5.Models.CLesson
+@{
+    ViewBag.Title = Model.Name;
+    ViewBag.Description = Model.Description;
+    ViewBag.GetRequest = "lesson";
+    ViewBag.ColContentClasses = "col-md-12";
+}
+
+<link rel="stylesheet" href="~/board/css/new_chessboard.css" />
+<script src="~/board/js/new_chessboard.js?v=101"></script>
+<script src="~/board/js/chess.js"></script>
+<div class="col-md-12">
+    <div class="content__header">
+        <div class="content__panel" style="padding:15px">
+            <h1>Урок @Model.OrderNumb. @Model.Name</h1>
+            <p>@Model.Description</p>
+        </div>
+            <button class="btn btn-orange" id="BtnStart" onclick="js_href('/Lessons/Topic/@Model.Topics[0].ID')">Начать интерактивный урок</button>
+        </div>
+        <div id="lesson-page" class="content__block">
+            @foreach (var t in Model.Topics/*.FindAll(t => t.InArticle)*/)
+            {
+                <div class="content__panel flx_6">
+                    <div class="board-container" id="@("board" + t.OrderNumb)"
+                         onclick="js_href('/Lessons/Topic/@t.ID')" style="width: 45%;cursor:pointer"></div>
+                    <script>ChessBoard('@("board" + t.OrderNumb)', '@t.Position').orientation('@t.Orientation');</script>
+                    <div class="content__text">
+                        <h3><a class="lesson_link" href="/Lessons/Topic/@t.ID">@t.Name</a></h3>
+                        <p>@t.Description</p>
+                        <p>@t.FirstStep.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+@{ 
+    if (User.Identity.IsAuthenticated)
+    {
+        if (!Model.CountUser())
+        {
+            <script>
+                alert('Извините,\nна вашем счету не хватает ChessCoins для прохождения урока.\nПополните счет или заработайте Коины активностью на сайте.');
+                //modal_open('no_money');
+                //редирект на главную
+                document.location.href = '/';
+            </script>
+        }
+    }
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <script>var auth = true;</script>
+}else
+{
+    <script>
+		var auth = false;
+		$(function() {
+			modal_open('login');
+		});
+	</script>
+}
+
+<script>
+    function js_href(href){
+        if (auth === true) { 
+            document.location.href = href;
+        } else {
+            modal_open('login');
+        }
+    }
+    $('.lesson_link').on('click', function(e){
+        if (auth !== true) { 
+            e.preventDefault();
+            modal_open('login');
+        }
+    })
+</script>

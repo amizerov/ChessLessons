@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessNok.com", "ChessNok.com.csproj", "{72D0C626-A873-481E-95AA-5A33996CD8F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "amGlobals", "..\amGlobals\amGlobals.csproj", "{A69600FB-8789-4A7F-AED7-F22B6AEE9AB3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Designer|Any CPU = Designer|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72D0C626-A873-481E-95AA-5A33996CD8F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72D0C626-A873-481E-95AA-5A33996CD8F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72D0C626-A873-481E-95AA-5A33996CD8F6}.Designer|Any CPU.ActiveCfg = Debug|Any CPU
+		{72D0C626-A873-481E-95AA-5A33996CD8F6}.Designer|Any CPU.Build.0 = Debug|Any CPU
+		{72D0C626-A873-481E-95AA-5A33996CD8F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72D0C626-A873-481E-95AA-5A33996CD8F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A69600FB-8789-4A7F-AED7-F22B6AEE9AB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A69600FB-8789-4A7F-AED7-F22B6AEE9AB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A69600FB-8789-4A7F-AED7-F22B6AEE9AB3}.Designer|Any CPU.ActiveCfg = Designer|Any CPU
+		{A69600FB-8789-4A7F-AED7-F22B6AEE9AB3}.Designer|Any CPU.Build.0 = Designer|Any CPU
+		{A69600FB-8789-4A7F-AED7-F22B6AEE9AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A69600FB-8789-4A7F-AED7-F22B6AEE9AB3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {015ADA9D-D914-4E6F-81A7-DB602A19638D}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://server.ultrazoom.ru:8080/tfs/defaultcollection
+		SccProjectUniqueName0 = ..\\amGlobals\\amGlobals.csproj
+		SccProjectName0 = ../amGlobals
+		SccAuxPath0 = http://server.ultrazoom.ru:8080/tfs/defaultcollection
+		SccLocalPath0 = ..\\amGlobals
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName1 = ChessNok.com.csproj
+		SccProjectName1 = .
+		SccAuxPath1 = http://server.ultrazoom.ru:8080/tfs/defaultcollection
+		SccLocalPath1 = .
+		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+	EndGlobalSection
+EndGlobal

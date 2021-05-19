@@ -1,0 +1,132 @@
+﻿@model chess2.Models.ATopics
+<script>$('#chessa').css('background-color', '#4f66ac');</script>
+<script>$('#chessa').css('border-radius', '15px');</script>
+
+<link rel="stylesheet" href="~/board/css/chessboard-0.3.0.css" />
+<script src="~/board/js/chessboard-0.3.0.js"></script>
+<script src="~/board/js/chess.js"></script>
+
+<style>
+    .Steps {
+        border: solid;
+        padding: 10px;
+        margin: 10px;
+    }
+    .NameBack {
+        cursor: pointer;
+        margin-bottom: 25px;
+    }
+</style>
+
+<br />
+<table width="100%" border="0">
+    <tr>
+        <td width="1%">
+            <div id="board" style="width: 500px"></div>
+            <br />
+            <input type="button" value="Начальная" onclick="board.start()">
+            <input type="button" value="Очистить" onclick="board.clear()">
+            <input type="button" value="Из урока" onclick="board.position('@Model.Lesson.Position');">
+            <input type="button" value="Повернуть" onclick="board.flip(); Orientation.value = board.orientation();">
+
+        </td>
+        <td width="50px"></td>
+        <td valign="top">
+            <h3 class="NameBack" onclick="document.location.href = '/Admin/Lesson/' + Lesson_ID">@Model.Lesson.Name</h3>
+            @using (Html.BeginForm("Topic", "Admin", FormMethod.Post))
+            {
+                <table border="0" width="100%">
+                    <tr><td>@Html.DropDownList("ID", new SelectList(Model, "ID", "Name"))<br /><br /></td></tr>
+                    <tr><td><input id="TopName" name="Name" style="width: 458px; padding: 5px;" value="Название задания"><br /><br /></td></tr>
+                    <tr>
+                        <td>Порядковый номер: <input id="OrderNumb" name="OrderNumb" style="width: 45px; padding: 5px;" value="0">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class="Steps" href="#" onclick="document.location.href = '/Admin/Step/' + Topic_ID;">Шаги</a>
+                            <br /><br />
+                        </td>
+                    </tr>
+                    <tr><td><textarea id="Descr" name="Description" style="width: 458px; height: 300px; padding: 5px;">Описание</textarea><br /><br /></td></tr>
+                    <tr>
+                        <td>
+                            @Html.HiddenFor(m => m.Lesson_ID)
+                            <input type="hidden" id="Position" name="Position" value="@Model.Lesson.Position" />
+                            <input type="hidden" id="Orientation" name="Orientation" value="@Model.Lesson.Orientation" />
+                            <button onclick="Delete()"> Удалить </button>&nbsp;&nbsp;
+                            <input type="submit" value="Сохранить задание" />&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                </table>
+            }
+        </td>
+    </tr>
+</table>
+<br /><br />
+
+<script>
+    $('#chessa a').html('Редактор уроков - задания');
+    var Topic_ID = 0;
+    var Lesson_ID = @Model.Lesson_ID;
+
+    var onChange = function (oldPos, newPos) {
+        Position.value = ChessBoard.objToFen(newPos);
+    };
+    var cfg = {
+        draggable: true,
+        dropOffBoard: 'trash',
+        sparePieces: true,
+        onChange: onChange,
+        position: '@Model.Lesson.Position',
+        orientation: '@Model.Lesson.Orientation'
+    };
+    var board = ChessBoard('board', cfg);
+
+    function OnTopicSelectionChange() {
+        TopName.value = $("#ID").find("option:selected").text();
+        Topic_ID = $("#ID").val();
+        GetTopicDetails();
+
+        if (Topic_ID == 0) {
+            $('a.Steps').hide();
+            board.position('@Model.Lesson.Position');
+            board.orientation('@Model.Lesson.Orientation');
+        }
+        else
+            $('a.Steps').show();
+    }
+
+        $(function () {
+            $("#ID").change(function () {
+                OnTopicSelectionChange();
+            });
+
+            OnTopicSelectionChange();
+        });
+
+        function GetTopicDetails() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetTopicDetails")',
+                data: { "Topic_ID": Topic_ID, "Lesson_ID": Lesson_ID },
+                dataType: 'json',
+                success: function (res) {
+                    $('#Descr').html(res.Description);
+                    $('#OrderNumb').val(res.OrderNumb);
+                    var pos = res.Position;
+                    var ori = res.Orientation;
+                    if (pos == null || pos == "") {
+                        pos = "@Model.Lesson.Position"; ori = '@Model.Lesson.Orientation';
+                    }
+                    board.position(pos); board.orientation(ori);
+                    Position.value = pos; Orientation.value = ori;
+                },
+                error: function (emp) {
+                    alert('error in GetTopicDetails');
+                }
+            });
+        }
+
+        function Delete() {
+            TopName.value = 'Delete';
+        }
+
+</script>
+

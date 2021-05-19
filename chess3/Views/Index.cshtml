@@ -1,0 +1,85 @@
+﻿@using Microsoft.AspNet.Identity
+@model chess5.Models.News
+@{
+    ViewBag.Title = "Уроки по шахматам";
+    ViewBag.Description = "Уроки по шахматам, игра, задачи!";
+    ViewBag.GetRequest = "home";
+    ViewBag.ColContentClasses = "col-md-9";
+}
+
+<link rel="stylesheet" href="~/board/css/chessboard-0.3.0.css" />
+<script src="~/board/js/chessboard-0.3.0.js"></script>
+<script src="~/board/js/chess.js"></script>
+<div class="col-md-12 content__title">
+    <h1>Интерактивные уроки по шахматам</h1>
+</div>
+<div class="col-md-6">
+    <div class="content__title">
+        <h3>Новости сайта</h3>
+    </div>
+    <div class="content__block content__home">
+        <div class="content__panel ">
+            <div class="content__board_left board-container" id="board3" onclick="document.location.href = '/Lessons/Lesson/@Model.LastLesson.ID'" style="width: 51%;cursor:pointer;"></div>
+            <script>ChessBoard('board3', '@Model.LastLesson.Position').orientation('@Model.LastLesson.Orientation');</script>
+            <a href="/Lessons/Lesson/@Model.LastLesson.ID">
+                @Model.LastLesson.Date.Substring(0, 10) - добавлен новый урок <b>"@Model.LastLesson.Name"</b>
+            </a>
+        <div>@Model.LastLesson.Description</div>
+        </div>
+        <div class="content__panel ">
+            <div class="content__board_left board-container" id="board1" onclick="document.location.href = '/Puzzles/Puzzle/@Model.LastPuzzle.ID'" style="width: 51%;cursor:pointer;"></div>
+            <script>ChessBoard('board1', '@Model.LastPuzzle.Position').orientation('@Model.LastPuzzle.Orientation');</script>
+            <a href="/Puzzles/Puzzle/@Model.LastPuzzle.ID">@Model.LastPuzzle.Date.Substring(0, 10)<br>добавлена новая задача<br>
+            в раздел <b>"@Model.LastPuzzle.Tema.Name"</b></a>
+        </div>
+    </div>
+
+    <br />
+    <a class="btn btn-orange" id="BtnStart" href="/Game">Играть в шахматы онлайн</a>
+
+</div>
+<div class="col-md-6">
+    <div class="content__title">
+        <h3>События в мире шахмат</h3>
+    </div>
+    <div class="content__block content__home">
+        <div class="content__panel ">
+            <img class="content__img_top" src="/img/tour2.jpg">
+            <a href="http://chess-results.com/tnr409757.aspx?lan=11&amp;art=1&amp;rd=8&amp;fed=RUS">Moscow Open-2019</a>
+            <div>
+                «Кубок РГСУ среди чемпионов школ» -Мемориал О.А. Журавского<br>Возрастные группы: мальчики и девочки до 9, 11, 13, 15 лет.<br>Призовой фонд: 400 000 рублей
+            </div>
+        </div>
+        <div class="content__panel">
+            <div class="content__board_left board-container" id="board2" onclick="document.location.href = '/Puzzles/Puzzle/@Model.PuzzleOfDay.ID'" style="width: 51%;cursor:pointer;"></div>
+            <a href="/Puzzles/Puzzle/@Model.PuzzleOfDay.ID">Задача дня<br>из раздела <b>"@Model.PuzzleOfDay.Tema.Name"</b></a>.
+            <script>ChessBoard('board2', '@Model.PuzzleOfDay.Position').orientation('@Model.PuzzleOfDay.Orientation');</script>
+        </div>
+    </div>
+</div>
+
+@section Sidebar {
+<div class="col-md-3" style="padding: 0;">
+    @if (Request.IsAuthenticated)
+    {
+        <div class="content__panel">
+            <div class="modal__form__title">
+                <span>Статистика</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="content__panel form-panel">
+            <div class="form-wrapper">
+                @Html.Partial("_ContentLoginFormPartial", new chess5.Models.LoginViewModel())
+            </div>
+        </div>
+        <div class="content__panel form-panel">
+            <div class="form-wrapper">
+                @Html.Partial("_ContentRegisterFormPartial", new chess5.Models.RegisterViewModel())
+            </div>
+        </div>
+    }
+</div>
+}

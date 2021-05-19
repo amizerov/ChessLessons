@@ -1,0 +1,91 @@
+﻿@using chess5.Models;
+@model chess5.Models.CLessons
+@{
+    ViewBag.Title = "Интерактивные уроки по шахматам";
+    ViewBag.Description = "Уроки по шахматам для начинающих и не только";
+    ViewBag.GetRequest = "lesson";
+    ViewBag.ColContentClasses = "col-md-12";
+}
+
+    <div class="col-md-12" id="lesson-index">
+        <div class="content__title">
+            <h1>Интерактивные уроки шахмат</h1> 
+            <div style="float:right;background-color:antiquewhite;padding:10px;margin-top:-30px;margin-right:20px;color:cadetblue;font-size:20px;border-radius:11px">
+                На вашем счете: @CurrentUser.Account.ChessCoin <img class="chess-coin" src="./img/chess-coin3.svg">
+            </div>
+        </div>
+        <h3>Знакомство с фигурами</h3>
+        <div class="content__block">
+            @foreach (var les in Model.FindAll(l => l.OrderNumb <= 6))
+            {
+                <div class="content__panel flx_4">
+                    <a href="/Lessons/Lesson/@les.ID">Урок @les.OrderNumb. @les.Name</a>
+                    <div style="float:right;margin-top:-55px;margin-right:11px;color:lightgray;">
+                        @les.CoinCost <img class="chess-coin" src="./img/chess-coin3.svg">
+                    </div>
+                </div>
+            }
+        </div>
+        <h3>Начальный уровень</h3>
+        <div class="content__block">
+            @foreach (var les in Model.FindAll(l => l.OrderNumb >= 7 && l.OrderNumb <= 18))
+            {
+            <div class="content__panel flx_4">
+                <a href="/Lessons/Lesson/@les.ID">Урок @les.OrderNumb. @les.Name</a>
+                <div style="float:right;margin-top:-55px;margin-right:11px;color:lightgray;">
+                    @les.CoinCost <img class="chess-coin" src="./img/chess-coin3.svg">
+                </div>
+            </div>
+            }
+        </div>
+        <h3>Средний уровень</h3>
+        <div class="content__block">
+            @foreach (var les in Model.FindAll(l => l.OrderNumb >= 19 && l.OrderNumb <= 36))
+            {
+            <div class="content__panel flx_4">
+                <a href="/Lessons/Lesson/@les.ID">Урок @les.OrderNumb. @les.Name</a>
+                <div style="float:right;margin-top:-55px;margin-right:11px;color:lightgray;">
+                    @les.CoinCost <img class="chess-coin" src="./img/chess-coin3.svg">
+                </div>
+            </div>
+            }
+        </div>
+        <h3>Высокий уровень</h3>
+        <div class="content__block">
+            @foreach (var les in Model.FindAll(l => l.OrderNumb >= 37))
+            {
+                if (les.OrderNumb > 41 && CurrentUser.Login != "yuliavm@list.ru")
+                {
+                    <div class="content__panel flx_4">
+                        <a onclick="modal_open('lesson_fail')">
+                            <img src="~/img/locked.png" width="30" />Урок @les.OrderNumb. @les.Name
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="content__panel flx_4">
+                        <a href="/Lessons/Lesson/@les.ID">Урок @les.OrderNumb. @les.Name</a>
+                        <div style="float:right;margin-top:-55px;margin-right:11px;color:lightgray;">
+                            @les.CoinCost <img class="chess-coin" src="./img/chess-coin3.svg">
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div id="modal_lesson_fail_wrapper" class="modal-wrapper">
+        <div class="c_modal">
+            <div class="modal__close">
+                <span class="link-item">
+                    <img src="https://img.icons8.com/windows/22/000000/delete-sign.png">
+                </span>
+            </div>
+            <div class="modal__content">
+                <div class="form-wrapper">
+                    <p><b>Для доступа к уроку заработай 1000 ChessCoins играя онлайн с живыми игроками и решая задачи!</b></p>
+                    <a onclick="modal_close('lesson_fail');" class="btn btn-primary">Ок</a>
+                </div>
+            </div>
+        </div>
+    </div>

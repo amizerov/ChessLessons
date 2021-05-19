@@ -1,0 +1,129 @@
+﻿@using chess5.Models;
+@model chess5.Models.CLesson
+@{
+    ViewBag.Title = Model.Name;
+    ViewBag.Description = Model.Description;
+    ViewBag.GetRequest = "lesson";
+    ViewBag.ColContentClasses = "col-md-12";
+}
+
+<div id="modal_no_money_wrapper" class="modal-wrapper">
+    <div class="c_modal w_auto">
+        <div class="modal__close">
+            <span class="link-item">
+                <img src="https://img.icons8.com/windows/22/000000/delete-sign.png">
+            </span>
+        </div>
+        <div class="modal__content">
+            <div class="form-wrapper">
+                <h3>
+                    <!--i class="fas fa-minus-circle"></i-->
+                    @{
+                        var u = Model.Name;
+                        var cu = Model.CoinCost;
+                        var l = CurrentUser.Login;
+                        var cl = CurrentUser.Account.ChessCoin;
+                        var n = CurrentUser.Person.NikName;
+                        var ip = Request.UserHostAddress;
+
+                        if (l.Length > 0 && cu > cl)
+                        {
+                            am.BL.G.db_exec($"insert clog(src, msg, ip) values('Нет денег на урок: ({cu}) {u}', '({cl}) Login: {l}; NikName: {n}', '{ip}')");
+                        }
+                        else
+                        {
+                            am.BL.G.db_exec($"insert clog(src, msg, ip) values('Урок: {u}', 'Заход без регистрации', '{ip}')");
+                        }
+                        if (n.Length > 8) { n = n.Substring(0, 8) + " ..."; }
+                        if (u.Length > 22) { u = u.Substring(0, 22) + " ..."; }
+                    }
+                    Уважаемый @n на вашем счете <font color="ff22ii" size="6">@CurrentUser.Account.ChessCoin</font> <img class="chess-coin" src="./img/chess-coin3.svg"><br />
+                    этого не достаточно для прохождения урока. <br />
+                    Урок "@u" стоит <font color="ff22dd">@Model.CoinCost </font> <img class="chess-coin" src="./img/chess-coin3.svg">
+                </h3>
+                <h4>Для получения <img class="chess-coin" src="./img/chess-coin3.svg"> (Chess Coins) </h4>
+                <p><a href="/Game"><i class="fas fa-chess"></i> играйте в шахматы</a></p>
+                <p><a href="/Puzzles"><i class="fas fa-tasks"></i> решайте задачи</a></p>
+                <p><a href="/Manage"><i class="fas fa-user"></i> заполните профиль</a></p>
+                <p><a href="/Manage"><i class="fas fa-wallet"></i> или пополните счет</a> - - ></p>
+                <div style="overflow: hidden;margin-left: 200px; margin-top: -110px; width: 355px;">
+                    <iframe style="margin-top: -45px;"
+                            src="https://yoomoney.ru/quickpay/shop-widget?writer=seller&targets=%D0%9A%D1%83%D0%BF%D0%B8%D1%82%D1%8C%20Chess%20Coins%20%D0%BF%D0%BE%20%D0%BA%D1%83%D1%80%D1%81%D1%83%200.1%20%D0%A0%2F%D0%A1&targets-hint=&default-sum=100&button-text=11&payment-type-choice=on&mobile-payment-type-choice=on&phone=on&mail=on&hint=&successURL=https%3A%2F%2Fchesslessons.ru%2FLessons&quickpay=shop&account=410018333433406"
+                            width="423" height="222" frameborder="0" allowtransparency="true" scrolling="no">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (User.Identity.IsAuthenticated && !Model.CountUser())
+{
+    <script>
+        $(function () {
+            modal_open('no_money');
+            $('#modal_no_money_wrapper .modal__close').remove();
+        });
+    </script>
+}
+else
+{
+    <link rel="stylesheet" href="~/board/css/new_chessboard.css" />
+    <script src="~/board/js/new_chessboard.js?v=101"></script>
+    <script src="~/board/js/chess.js"></script>
+    <div class="col-md-12">
+        <div class="content__header">
+            <div class="content__panel" style="padding:15px">
+                <h1>Урок @Model.OrderNumb. @Model.Name</h1>
+                <p>@Model.Description</p>
+            </div>
+            <button class="btn btn-orange" id="BtnStart" onclick="js_href('/Lessons/Topic/@Model.Topics[0].ID')">Начать интерактивный урок</button>
+        </div>
+        <div id="lesson-page" class="content__block">
+            @foreach (var t in Model.Topics/*.FindAll(t => t.InArticle)*/)
+            {
+                <div class="content__panel flx_6">
+                    <div class="board-container" id="@("board" + t.OrderNumb)"
+                         onclick="js_href('/Lessons/Topic/@t.ID')" style="width: 45%;cursor:pointer"></div>
+                    <script>ChessBoard('@("board" + t.OrderNumb)', '@t.Position').orientation('@t.Orientation');</script>
+                    <div class="content__text">
+                        <h3><a class="lesson_link" href="/Lessons/Topic/@t.ID">@t.Name</a></h3>
+                        <p>@t.Description</p>
+                        <p>@t.FirstStep.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <script>var auth = true;</script>
+}
+else
+{
+    <script>
+        var auth = false;
+        $(function () {
+            modal_open('login');
+        });
+    </script>
+}
+
+<script>
+    function js_href(href) {
+        if (auth === true) {
+            document.location.href = href;
+        } else {
+            modal_open('login');
+        }
+    }
+    $('.lesson_link').on('click', function (e) {
+        if (auth !== true) {
+            e.preventDefault();
+            modal_open('login');
+        }
+    })
+</script>

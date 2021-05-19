@@ -1,0 +1,355 @@
+﻿@{
+    ViewBag.Title = "Онлайн игра с движком StockFish";
+    ViewBag.Description = "Играть в шахматы онлайн с компьютером бесплатно, без регистрации. Онлайн игра с движком StockFish, играйте с самым мощным в мире шахматным роботом.";
+    ViewBag.GetRequest = "game";
+    ViewBag.ColContentClasses = "col-md-12 page--game";
+}
+<link rel="stylesheet" href="~/board/css/new_chessboard.css?v=124" />
+<script src="~/board/js/new_chessboard.js?v=101"></script>
+<script src="~/board/js/chess.js"></script>
+
+<div class="page--game-container">
+	<div class="col-md-7" style="margin-bottom: 15px;">
+
+		<div class="board-panel board-top">
+			<div class="board-panel-item">
+				<div class="board-panel-info">
+                    <img class="img_profile_game" src="https://im0-tub-ru.yandex.net/i?id=85932e933bfdd332ec0cc52e9f6f9e2d&n=13">
+                    <span class="user_name" id="sopernik">Компьютер</span>
+				</div>
+                <div class="removed_piece" id="removed_piece1"></div>
+				<div class="board-panel-time">
+                    <span class="right-item bg-dark" id="time1">0:05:00</span>
+                </div>
+			</div>
+		</div>
+		
+		<div id="board" class="cb_shadow" style="width: 100%;"></div>
+		
+		<div class="board-panel board-bottom">
+			<div class="board-panel-item">
+				<div class="board-panel-info">
+					<img class="img_profile_game" src="https://im0-tub-ru.yandex.net/i?id=85932e933bfdd332ec0cc52e9f6f9e2d&n=13">
+					<span class="user_name" id="user_name2">Вы</span>
+				</div>
+                <div class="removed_piece" id="removed_piece2"></div>
+                <div class="board-panel-time">
+                    <span class="right-item bg-light" id="time2">0:05:00</span>
+                </div>
+			</div>
+		</div>
+		
+	</div>
+	<div id="resizetest" class="col-md-5">
+		<div class="m_show_panels_wrapper">
+			<div class="m_show_panels_container">
+				<div id="show_panel_wrp_1" class="m_show_panel-item"><span>Настройки доски</span></div>
+				<div id="show_panel_wrp_2" class="m_show_panel-item"><span>Ходы</span></div>
+				<div class="btn-group m_show_panel-item">
+					<button class="btn2 btn-start-game" onclick="modal_open('game_settings');" data-placement="auto" title="Настройки игры">
+						<i class="fas fa-cog"></i>
+					</button>
+					<button class="btn2 btn-start-game" onclick="newGame(true)">Новая игра</button>
+				</div>
+			</div>
+		</div>
+		<div id="panel_wrp_2" class="panel-wrapper m_hide-wrapper">
+            <div id="open_chats_3" class="panel bg-panel">
+                <div class="panel__close">
+                    <span class="link-item">
+                        <img src="https://img.icons8.com/windows/22/000000/delete-sign.png">
+                    </span>
+                </div>
+                <div class="panel__scroll-wrapper">
+                    <div class="panel-title">
+                        <div class="flex_style">
+                            <button class="open_chats_1 active">ХОДЫ</button>
+                        </div>
+                    </div>
+                    <div id="resize_block">
+                        <div id="resize_block1" class="chat_online_2 active">
+                            <div class="fix-height-container">
+                                <div id="pgn" class="fix-height"></div>
+                            </div>
+                            <div class="btns_show_moves chat_6">
+                                <button class="btnDesign" onclick="startMove()"><i class="fas fa-angle-double-left"></i></button>
+                                <button class="btnDesign" id="prev_move" onclick="prevMove()"><i class="fas fa-angle-left"></i></button>
+                                <button class="btnDesign" id="next_move" onclick="nextMove()"><i class="fas fa-angle-right"></i></button>
+                                <button class="btnDesign" onclick="endMove()"><i class="fas fa-angle-double-right"></i></button>
+                            </div>
+                        </div>
+                        <div id="resize_block2" class="chat_online"></div>
+                    </div>
+                    <div id="block_resizer" class="panel__scroller">
+                        <span class="scroller__line"></span>
+                        <span class="scroller__line"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div id="panel_wrp_1" class="panel-wrapper m_hide-wrapper">
+			<div class="panel bg-panel">
+				<div class="panel__close">
+					<span class="link-item">
+						<img src="https://img.icons8.com/windows/22/000000/delete-sign.png">
+					</span>
+				</div>
+				<div class="panel__scroll-wrapper">
+					<button class="btnDesign btnSettings" onclick="modal_open('settings');" data-placement="auto" title="Настройки доски">
+						<i class="fas fa-cogs"></i>
+					</button>
+					<div class="btn-group">
+						<button class="btn2 btn-start-game" onclick="modal_open('game_settings');" data-placement="auto" title="Настройки игры">
+							<i class="fas fa-cog"></i>
+						</button>
+						<button class="btn2 btn-start-game" onclick="newGame(true)">Новая игра</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="modal_game_settings_wrapper" class="modal-wrapper">
+    <div class="c_modal w_auto">
+        <div class="modal__close">
+            <span class="link-item">
+                <img src="https://img.icons8.com/windows/22/000000/delete-sign.png">
+            </span>
+        </div>
+        <div class="modal__content">
+            <div class="form-wrapper">
+                <div class="panel-title">
+                    <span><b>Настройки игры</b></span>
+                </div>
+                <form>
+                    <div class="form-group inline-item">
+                        <label class="control-label">Время (мин.)</label>
+                        <input class="form-control" type="number" id="timeBase" value="5">
+                    </div>
+                    <div class="form-group inline-item">
+                        <label class="control-label">Добавление (сек.)</label>
+                        <input class="form-control" type="number" id="timeInc" value="2">
+                    </div>
+                    <div class="form-group inline-item">
+                        <label class="control-label">Уровень (от 0 до 20)</label>
+                        <input class="form-control" type="number" id="skillLevel" value="1">
+                    </div>
+                    <div class="form-group inline-item">
+                        <label class="control-label">Фигуры</label>
+                        <div class="right-item">
+                            <label class="btn2 btn-primary2" id="color-white">
+                                <input id="clr-white" type="radio" name="color" checked="">
+                                <span class="input--checked">Белые</span>
+                            </label>
+                            <label class="btn2 btn-primary2" id="color-black">
+                                <input id="clr-black" type="radio" name="color">
+                                <span class="input--checked">Черные</span>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-start-game" onclick="newGame(true)">Новая игра</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+</script>
+<script src="~/board/js/new_enginegame.js?v=142"></script>
+<script>
+    $(function(){
+        var block;
+        var block_r;
+        var delta_h = 0;
+        
+        block = document.getElementById("resizetest");
+        block_r = document.getElementById("block_resizer");
+        document.onmouseup = clearXY;
+        block_r.onmousedown = saveWH;
+        
+        function getXY(e) {
+            if (e)
+                return new Array(e.pageX, e.pageY);
+
+            return new Array(window.event.clientX, window.event.clientY);
+        }
+        function saveWH(e) {
+            var point = getXY(e);
+            h_block = block.clientHeight;
+            delta_h = h_block - point[1];
+            document.onmousemove = resizeBlock;
+            return false;
+        }
+        function clientHeight() {
+            return document.documentElement.clientHeight == 0 ? document.body.clientHeight : document.documentElement.clientHeight;
+        }
+        function clearXY() {
+            document.onmousemove = null;
+        }
+        function resizeBlock(e) {
+            var point = getXY(e);
+            var new_h = delta_h + point[1];
+            if( new_h < 440)
+                return;
+
+            setHeigth(new_h);
+        }
+        function setHeigth(new_h) {
+            block.style.height = new_h + "px";
+            /*if (block.offsetTop + block.clientHeight > clientHeight()) 
+                block.style.height = (clientHeight() - block.offsetTop) + "px";*/
+        }
+    });
+    $(function(){
+        $('#btn-draw').tooltip();
+        $('#btn-surrender').tooltip();
+        $(document).keyup(function(e){
+            if(e.which === 37) {
+                $('#prev_move').addClass('active').focus().click();
+                setTimeout("$('#prev_move').removeClass('active')", 300);
+            }
+            if(e.which === 39) {
+                $('#next_move').addClass('active').focus().click();
+                setTimeout("$('#next_move').removeClass('active')", 300);
+            }
+        });
+    });
+    function setBoardPiece(piece) {
+        if(piece === undefined)
+            piece = 'tour_new';
+        localStorage['cb_piece'] = piece;
+        if($('.cb_chessboard').length <= 0)
+            return;
+        $('.cb_piece').each( function(ind, el){
+            $(el).attr('src', function(ind, attr){
+                return attr.replace(/\.\/board\/pieces\/.*\//gi, './board/pieces/'+piece+'/');
+            });
+        });
+        game.setPieceTheme('./board/pieces/'+piece+'/{piece}.png');
+    }
+    function setBoardColor(color) {
+        if(color === undefined)
+            color = 'default';
+        localStorage['cb_color'] = color;
+        if($('.cb_chessboard').length <= 0)
+            return;
+        color = 'cb_color--' + color;
+        var body = $('body');
+        var body_clss = body.attr('class');
+        if(typeof body_clss !== 'undefined' && body_clss.length > 0)
+            body.removeClass(['cb_color--default', 'cb_color--blue', 'cb_color--green', 'cb_color--grey', 'cb_color--wood1', 'cb_color--wood2']);
+        body.addClass(color);
+    }
+    var history_counter = false;
+    var prev_move = false;
+    var next_move = false;
+    function startMove() {
+        var history_fen = game.getHistoryFen();
+        prev_move = 0;
+        history_counter = 0;
+        game.getBoard().position(history_fen[0].split(' ')[0]);
+    }
+    function endMove() {
+        var history_fen = game.getHistoryFen();
+        var len = history_fen.length;
+        prev_move = true;
+        history_counter = len - 1;
+        game.getBoard().position(history_fen[len - 1].split(' ')[0]);
+    }
+    function prevMove() {
+        var history_fen = game.getHistoryFen();
+        var len = history_fen.length;
+        if(prev_move === 0 || history_counter === 0)
+            return;
+        if(history_counter === false)
+            history_counter = len - 1;
+        prev_move = history_counter - 1;
+        game.getBoard().position(history_fen[prev_move].split(' ')[0]);
+        history_counter--;
+    }
+    function nextMove() {
+        var history_fen = game.getHistoryFen();
+        var len = history_fen.length;
+        if(history_counter === len - 1 || history_counter  === false)
+            return;
+        next_move = history_counter + 1;
+        game.getBoard().position(history_fen[next_move].split(' ')[0]);
+        history_counter++;
+        prev_move = true;
+    }
+    function getRemovedPiece(fen) {
+        if(fen === undefined)
+            fen = false;
+        var pdef = { P: 8, R: 2, N: 2, B: 2, Q: 1, K: 1 };
+        var str = fen.split(' ')[0].replace(/\//g, '').replace(/[0-9]/g, '');
+        var w = str.replace(/[a-z]/g, '');
+        var b = str.replace(/[A-Z]/g, '');
+        var pcurrent = {
+            w: {P: m(w, 'P'), R: m(w, 'R'), N: m(w, 'N'), B: m(w, 'B'), Q: m(w, 'Q') ,K: m(w, 'K') }, 
+            b: {P: m(b, 'p'), R: m(b, 'r'), N: m(b, 'n'), B: m(b, 'b'), Q: m(b, 'q') ,K: m(b, 'k') }};
+        var pnew = {
+            w: {P: 0, R: 0, N: 0, B: 0, Q: 0 ,K: 0 }, 
+            b: {P: 0, R: 0, N: 0, B: 0, Q: 0 ,K: 0 }};
+        function m(str, p) {
+            var r = new RegExp(p, 'g');
+            return (str.match(r)) ? str.match(r).length : 0;
+        };
+        for(key in pcurrent.b){
+            var count =  pdef[key] - pcurrent.b[key];
+            if(count > 0)  pnew.b[key] = count;
+        };
+        for(key in pcurrent.w){
+            var count =  pdef[key] - pcurrent.w[key];
+            if(count > 0) pnew.w[key] = count;
+        };
+        showRemovedPiece(pnew);
+    }
+    function showRemovedPiece(pnew) {
+        var whtml = '';
+        var bhtml = '';
+        var icons = {P: 'fa-chess-pawn', R: 'fa-chess-rook', N: 'fa-chess-knight', B: 'fa-chess-bishop', Q: 'fa-chess-queen', K: 'fa-chess-king'};
+        for(key in pnew.w) {
+            if(pnew.w[key] > 0) {
+                var html = '<i class="removed_piece_to_w fas '+icons[key]+'"></i>';
+                if(pnew.w[key] > 1) 
+                    html = html.repeat(pnew.w[key]);
+                whtml += '<span>'+html+'</span>';;
+            }
+        }
+        for(key in pnew.b) {
+            if(pnew.b[key] > 0) {
+                var html = '<i class="removed_piece_to_b fas '+icons[key]+'"></i>';
+                if(pnew.b[key] > 1) 
+                    html = '<span>'+html.repeat(pnew.b[key])+'</span>';
+                bhtml += '<span>'+html+'</span>';
+            }
+        }
+        $('#removed_piece1').html(whtml);
+        $('#removed_piece2').html(bhtml);
+    }
+    var game = engineGame({book: 'book.bin'});
+
+    function newGame(e) {
+        if(e === undefined)
+            e = false;
+        var baseTime = parseFloat($('#timeBase').val()) * 60;
+        var inc = parseFloat($('#timeInc').val());
+        var skill = parseInt($('#skillLevel').val());
+        game.reset();
+        game.setTime(baseTime, inc);
+        game.setSkillLevel(skill);
+        game.setAggressiveness(30);
+        game.setPlayerColor($('#clr-white').prop('checked') ? 'white' : 'black');
+        game.setDisplayScore(true);
+        game.start();
+        e == true ? game.startClock(): false;
+        if($('#clr-black').prop('checked')) {
+            $('.board-panel').addClass('reverse');
+        } else {
+            $('.board-panel').removeClass('reverse');
+        }
+    }
+    newGame();
+</script>

@@ -1,0 +1,197 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #idSettings {
+        background-color: antiquewhite;
+        padding-left: 5px;
+    }
+
+    td {
+        padding: 10px;
+        margin: 10px;
+    }
+</style>
+
+<h3>Выберете дизайн сайта по умолчанию</h3>
+
+<div id="modal_settings_wrapper" class="modal-wrapper" style="margin-top:-100px">
+    <div class="c_modal w_auto">
+        <div class="modal__content">
+            <div class="form-wrapper">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Настройки сайта</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Настройки доски</a>
+                    </li>
+                </ul>
+                <div class="tab-content btns_settings">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <div class="settings_color set_color" style="margin-top: 20px;">
+                            <p><b>Цвет сайта</b></p>
+                            <button class="site_color--blue btn2 btn2-default" data-sett="site_color--blue" style="background-color: hsl(219, 36%, 55%);"></button>
+                            <button class="site_color--green btn2 btn2-default" data-sett="site_color--green" style="background-color: hsl(136, 36%, 55%);"></button>
+                            <button class="site_color--yellow btn2 btn2-default" data-sett="site_color--yellow" style="background-color: hsl(49, 97%, 87%);"></button>
+                        </div>
+                        <div class="set_bg" style="margin-top: 20px;">
+                            <p class="text-left"><b>Фоновое изображение</b></p>
+                            <button class="site_bg--default btn2 btn2-default btn2-with-image" data-sett="site_bg--default" style="background-image: url(/img/set_bg/min-default.jpg);"></button>
+                            <button class="site_bg--1 btn2 btn2-default btn2-with-image" data-sett="site_bg--1" style="background-image: url(/img/set_bg/min-1.jpg);"></button>
+                            <button class="site_bg--2 btn2 btn2-default btn2-with-image" data-sett="site_bg--2" style="background-image: url(/img/set_bg/min-2.jpg);"></button>
+                            <button class="site_bg--3 btn2 btn2-default btn2-with-image" data-sett="site_bg--3" style="background-image: url(/img/set_bg/min-3.jpg);"></button>
+                            <button class="site_bg--4 btn2 btn2-default btn2-with-image" data-sett="site_bg--4" style="background-image: url(/img/set_bg/min-4.jpg);"></button>
+                            <button class="site_bg--5 btn2 btn2-default btn2-with-image" data-sett="site_bg--5" style="background-image: url(/img/set_bg/min-5.jpg);"></button>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="profile">
+                        <div class="settings_color set_board text-left" style="margin-top: 20px;">
+                            <p><b>Цвет доски</b></p>
+                            <button class="cb_color--blue btn2 btn2-default" data-sett="cb_color--blue" style="background-color: hsl(219, 36%, 55%);"></button>
+                            <button class="cb_color--default btn2 btn2-default" data-sett="cb_color--default"></button>
+                            <button class="cb_color--green btn2 btn2-default" data-sett="cb_color--green" style="background-color: hsl(136, 36%, 55%);"></button>
+                            <button class="cb_color--grey btn2 btn2-default" data-sett="cb_color--grey" style="background-color: hsl(0, 0%, 61%);"></button>
+                            <button class="cb_color--wood1 btn2 btn2-default" data-sett="cb_color--wood1" style="background-image: url(/board/bg/wood-d1.jpg);"></button>
+                            <button class="cb_color--wood2 btn2 btn2-default" data-sett="cb_color--wood2" style="background-image: url(/board/bg/wood-d2.jpg);"></button>
+                        </div>
+                        <div class="set_figure" style="margin-top: 20px;">
+                            <p class="text-left"><b>Стиль фигур</b></p>
+                            <button class="cb_piece--tour_new btn2 btn2-default btn2-with-pieces" data-sett="cb_piece--tour_new">
+                                <span>Обычные</span>
+                                <span>
+                                    <img src="./board/pieces/tour_new/bB.png">
+                                    <img src="./board/pieces/tour_new/bK.png">
+                                    <img src="./board/pieces/tour_new/bN.png">
+                                </span>
+                            </button>
+                            <button class="cb_piece--chess24 btn2 btn2-default btn2-with-pieces" data-sett="cb_piece--chess24">
+                                <span>Объемные</span>
+                                <span>
+                                    <img src="./board/pieces/chess24/bB.png">
+                                    <img src="./board/pieces/chess24/bK.png">
+                                    <img src="./board/pieces/chess24/bN.png">
+                                </span>
+                            </button>
+                            <button class="cb_piece--wikipedia btn2 btn2-default btn2-with-pieces" data-sett="cb_piece--wikipedia">
+                                <span>Wiki</span>
+                                <span>
+                                    <img src="./board/pieces/wikipedia/bB.png">
+                                    <img src="./board/pieces/wikipedia/bK.png">
+                                    <img src="./board/pieces/wikipedia/bN.png">
+                                </span>
+                            </button>
+                            <button class="cb_piece--metro btn2 btn2-default btn2-with-pieces" data-sett="cb_piece--metro">
+                                <span>Metro</span>
+                                <span>
+                                    <img src="./board/pieces/metro/bB.png">
+                                    <img src="./board/pieces/metro/bK.png">
+                                    <img src="./board/pieces/metro/bN.png">
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form class="settings_form" type="POST" action="">
+
+    <h4>Значения настроек для сохранения</h4><br>
+    
+    <label>Цвет сайта
+        <input class="form-control" name="site_color" type="text" value="site_color--blue">
+    </label>
+
+    <label>Фоновое изображение сайта
+        <input class="form-control" name="site_bg" type="text" value="site_bg--1">
+    </label>
+
+    <label>Цвет доски
+        <input class="form-control" name="cb_color" type="text" value="cb_color--blue">
+    </label>
+
+    <label>Изображения фигур
+        <input class="form-control" name="cb_piece" type="text" value="cb_piece--tour_new">
+    </label><br>
+
+    <button type="submit">Сохранить</button>
+
+</form>
+
+<!--form class="site_bg_upload_form" type="POST" action="">
+
+    <h4>Загрузить фон для сайта</h4><br>
+    
+    <img id="UploadedImg" src="../img/set_bg/null" style="width:150px;">
+    <br>
+
+    <label>Image path
+        <input class="form-control" id="ImgPath" name="ImgPath">
+    </label><br>
+
+    <input class="form-control" type="file" id="FileToUpload" value="...">
+    
+</form-->
+
+<script type="text/javascript" src="http://duga_wp.loc/wp-content/themes/duga/js/jquery-3.3.1.min.js?ver=20151215"></script>
+<script>
+    
+    $(document).ready(function(){   
+        set_sett_btns();
+        $('.btns_settings button').append('<span class="delete">-</span>');
+    });
+    
+    $('.btns_settings .btn2').on('click', '.delete', function(e){
+        e.stopPropagation();
+        var btn = $(e.target).parent();
+        var sett = btn.attr('data-sett');
+        var img_path = null;
+        
+        if(btn.hasClass('btn2-with-image'))
+            img_path = btn.attr('style').replace('background-image: url(','').replace(');','').replace(/\"/gi, "");
+        
+        
+        console.log(sett);
+        
+        console.log(img_path); 
+        
+        /*------------*/
+        //if ajax response: true
+            clear_dom_sett(btn, sett);
+        /*-------------*/
+    });
+    
+    function clear_dom_sett(btn, sett){
+        var input_name = sett.split('--')[0];
+        
+        if(btn.hasClass('has_sett'))
+            $('.settings_form').find('input[name="' + input_name +'"]').val('');
+        
+        $(btn).remove(); 
+    }
+    
+    function set_sett_btns() {
+
+        $('.has_sett').removeClass('has_sett');
+
+        $('.settings_form').find('input').each(function(ind, el){
+            if($(el).val().length > 0)
+               var btn = $('button[data-sett="'+$(el).val()+'"]').addClass('has_sett');
+        }); 
+    }
+
+    $('.btns_settings button').on('click', function(){
+        var sett = $(this).attr('data-sett');
+        var input_name = sett.split('--')[0];
+        
+        
+        $('.settings_form').find('input[name="' + input_name +'"]').val(sett);
+
+        set_sett_btns();
+    });
+</script>

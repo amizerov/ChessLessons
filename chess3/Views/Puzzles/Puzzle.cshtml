@@ -1,0 +1,423 @@
+﻿@{
+    ViewBag.Title = "Задача №" + ViewBag.Puzzle.OrderNumb;
+    ViewBag.GetRequest = "puzzle";
+    ViewBag.ColContentClasses = "col-md-12";
+}
+@if (User.Identity.IsAuthenticated)
+{
+    <script>var auth = true;</script>
+}
+else
+{
+    <script>var auth = false;</script>
+}
+
+<script>
+    if (auth !== true) {
+        document.location.href = '/Account/Login';
+    }
+</script>
+<link rel="stylesheet" href="~/board/css/new_chessboard.css?v=147" />
+<script src="~/board/js/new_chessboard.js?v=101"></script>
+<script src="~/board/js/chess.js"></script>
+
+<div class="col-md-7 order_1">
+    <div class="shess-board-wrapper">
+        <div id="board" style="width: 100%;"></div>
+        <!--p>Status: <span id="status"></span></p-->
+        <!--p>FEN: <span id="fen"></span></p-->
+    </div>
+</div>
+<div class="col-md-5 page--game">
+    <div class="m_show_panels_wrapper">
+        <div class="m_show_panels_container">
+            <div class="m_show_panel-item">
+                <button class="btn2 btn2-grey v___BtnRestart" onclick="Restart()" disabled="">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <button class="btn2 btn2-orange v___BtnNext" onclick="NextStep()" disabled="">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="btn2 btn2-blue" onclick="Help()">
+                    <i class="fas fa-question"></i>
+                </button>
+                <button class="btn2 btn2-default" onclick="modal_open('settings');" data-placement="auto" title="Настройки доски">
+                    <i class="fas fa-cogs"></i>
+                </button>
+            </div>
+            <div id="show_panel_wrp_1" class="m_show_panel-item"><span>Описание Задачи</span></div>
+        </div>
+    </div>
+    <div id="panel_wrp_1" class="panel-wrapper m_hide-wrapper">
+        <div class="panel bg-panel">
+            <div class="panel__close">
+                <span class="link-item">
+                    <img src="https://img.icons8.com/windows/22/000000/delete-sign.png">
+                </span>
+            </div>
+            <div class="panel__scroll-wrapper">
+                <img src="~/img/piece5.png" alt="panel-img" class="panel-figure">
+                <div class="panel-title">
+                    <span>
+                        <a href="/Puzzles">
+                            <b>@ViewBag.Puzzle.Tema.Name</b><br />
+                            <span style="font-family:Arial;font-size:smaller">
+                                Задача № @ViewBag.Puzzle.OrderNumbInTema из @ViewBag.Puzzle.Tema.Puzzles.Count
+                            </span>
+                        </a>
+                    </span>
+                </div>
+                <div class="fix-height">
+                    <div id="Desc">00:00</div>
+                    <div id="colorToMove">Ход белых</div>
+                </div>
+                <div class="flx" style="margin-top: 10px;">
+                    <div>
+                        <button class="btn2 btn2-circle btn2-orange btn__restart v___BtnRestart" onclick="Restart()" disabled="">
+                            <img src="~/img/arrow-right.png" alt="">
+                        </button>
+                        <button class="btn2 btn2-circle btn2-blue btn__next v___BtnNext" onclick="NextStep()" disabled="">
+                            <img src="~/img/arrow-right.png" alt="">
+                        </button>
+                    </div>
+                    <div>
+                        <button class="btn2 btn2-circle btn2-grey question__btn" onclick="Help()">
+                            <i class="fas fa-question"></i>
+                        </button>
+                        <button class="btn2 btn2-circle btn2-default settings__btn" onclick="modal_open('settings');" data-placement="auto" title="Настройки доски">
+                            <i class="fas fa-cogs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <img src="~/img/piece1.png" alt="">
+</div>
+<!--
+<div class="col-md-5">
+    <div class="content__title">
+        <h1>
+            <a href="/Puzzles/Puzzle/@ViewBag.Puzzle.Tema_ID">@ViewBag.Puzzle.Tema.Name</a>
+        </h1>
+        <h1>@ViewBag.Puzzle.Name</h1>
+    </div>
+    <div class="m_show_panels_wrapper">
+        <div class="m_show_panels_container">
+            <div class="panel-wrapper m_collapse-wrapper">
+                <div class="m_collapse_panel-item">
+                    <div class="panel transparent-panel">
+                        <div class="panel__scroll-wrapper">
+                            <div class="lesson-desc__navbar">
+                                <table width="100%">
+                                    <tr>
+                                        <td>
+                                            <button class="lesson-nav-btn btn btn-round btn-grey" style="width:150px" id="BtnRestart" onclick="Restart()" disabled=""> < </button>
+                                            <button class="lesson-nav-btn btn btn-round btn-orange" style="width:150px" id="BtnNext" onclick="NextStep()"> > </button>
+                                        </td>
+                                        <td align="right">
+                                            <button class="lesson-nav-btn btn btn-round btn-blue" onclick="Help()"> ? </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="show_panel_wrp_1" class="m_show_panel-item"><span>Описание</span></div>
+        </div>
+    </div>
+    <div id="panel_wrp_1" class="panel-wrapper m_hide-wrapper">
+        <div class="panel bg-panel">
+            <div class="panel__close">
+                <span class="link-item">
+                    <img src="https://img.icons8.com/windows/22/000000/delete-sign.png">
+                </span>
+            </div>
+            <div class="panel__scroll-wrapper">
+                <div class="lesson-desc__panel" id="Desc">00:00</div>
+                <div class="lesson-desc__panel"  id="colorToMove">Ход белых</div>
+            </div>
+        </div>
+    </div>
+</div>-->
+<script>
+    var CorrectMoveFrom = false;
+    var sec = 0;
+    var game;
+    var LastMove;
+    var Puzzle_ID = @ViewBag.Puzzle.ID;
+    var stnumb = 0, IsLastStep = true;
+    var step = 0, Step_ID = 0;
+    var move = 0, Move_ID = 0;
+
+    var squareToHighlight;
+    var colorToHighlight;
+    var game_history_fen = [];
+    var boardEl = $('#board');
+    var curPosition = '@ViewBag.Puzzle.Position';
+    var board = ChessBoard('board', curPosition);
+    board.orientation('@ViewBag.Puzzle.Orientation');
+    if (board.orientation() === 'black') $('#colorToMove').html('Ход черных');
+
+    //идем сразу в 1-ый шаг
+    $(document).ready(function () { setTimeout(NextStep, 100); });
+
+    function Help() {
+        var square = CorrectMoveFrom.substr(1);
+            $('.cb_square-'+square).addClass('cb_help_move');
+    }
+
+    function CountSec() {
+        if (sec < 0) return;
+        $('#Desc').html(TimerString());
+    }
+
+    function NextStep() {
+        $('.v___BtnNext').prop("disabled", true);
+
+        GetPStep(++stnumb);
+        setInterval(CountSec, 1000);
+    }
+
+    function Restart()
+    {
+        if ($('.v___BtnRestart').prop("disabled")) {
+            console.log('кнопка ресет НЕ активна - не делаем вызврат');
+            return;
+        }
+        else {
+            console.log('активна - возвращаемся в позицию начала');
+            $('.v___BtnRestart').prop("disabled", true);
+            GetPStep(stnumb);
+
+            sec = 0;
+        }
+    }
+    function GetPStep(stnumb) {
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetPStep")',
+            data: { "Puzzle_ID": Puzzle_ID, "stepNumber": stnumb },
+            dataType: 'json',
+            success: function (res) {
+                console.log(res);
+                IsLastStep = (res.IsLastStep === 1);
+                Step_ID = res.ID;
+                if (Step_ID === 0) {
+                    if (res.NextPuzzleID === 0)
+                        document.location.href = '/Puzzles';
+                    else
+                        document.location.href = '/Puzzles/Puzzle/' + res.NextPuzzleID;
+                    return;
+                }
+                CorrectMoveFrom = res.CorrectMoveFrom;
+                curPosition = res.Position + ' ' + board.orientation()[0] + ' - - 0 1';
+                init();
+
+                (new Audio("/img/standUp.mp3")).play();
+            },
+            error: function (emp) {
+                alert('error in GetStep');
+            }
+        });
+    }
+
+    function GetPMoveResult(position) {
+       $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetPMoveResult")',
+            data: { "new_position_after_move": position, "Step_ID": Step_ID },
+            dataType: 'json',
+            success: function (res) {
+                var msgRating = '', msgChange = '';
+                if (res.NewUserPuzleRating > 0) {
+                    if (res.ChangeUserPuzleRating > 0)
+                        msgChange = ' (<font color="Green">+' + res.ChangeUserPuzleRating + '</font>)';
+                    else
+                        msgChange = ' (<font color="Red">' + res.ChangeUserPuzleRating + '</font>)';
+
+                    msgRating = '<br>Ваш новый рейтинг в задачах ' + res.NewUserPuzleRating + msgChange;
+                }
+                if (res.Correctness === 1)
+                {
+                    $('.v___BtnNext').prop("disabled", false);
+                    (new Audio("/img/standUp.mp3")).play();
+                    $('#Desc').html('<font color="green">Правильно!</font> ' + msgRating);
+                    sec = -1;
+
+                    if (!IsLastStep) {
+                        setTimeout('NextStep()', 1800);
+                        if (game.turn() === 'b')    $('#colorToMove').html('Ход белых');
+                        else                        $('#colorToMove').html('Ход черных');
+                    }
+                    else $('#colorToMove').html('Переходите к следующей задаче ...<br>' +
+                        '<font size="3">Нажмите кнопку - Вперед (->).</font>');
+                }
+                else {
+                    $('.v___BtnRestart').removeAttr('disabled');
+                    (new Audio("/img/error.mp3")).play();
+                    $('#Desc').html('<font color="red">Неправильно!</font>' + msgRating);
+                    sec = -1;
+
+                    setTimeout('Restart()', 3000);
+                }
+            },
+            error: function (emp) {
+                alert('error');
+            }
+        });
+    }
+    var init = function () {
+        game = new Chess();
+        var vf = game.validate_fen(curPosition);
+        if (!vf.valid) {
+            alert('Не правильно задана позиция!\n' + curPosition+'\n\rОшибка:'+vf.error);
+            return;
+        }
+        game.load(curPosition);
+
+        var statusEl = $('#status');
+        var fenEl = $('#fen');
+        // do not pick up pieces if the game is over
+        // only pick up pieces for the side to move
+        var onDragStart = function (source, piece, position, orientation) {
+            if (game.game_over() === true ||
+                (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+                (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+                return false;
+            }
+        };
+        var onDrop = function (source, target) {
+            $('.cb_square').removeClass('cb_help_move');
+            removeGreySquares();
+            // see if the move is legal
+            var move = game.move({
+                from: source,
+                to: target,
+                promotion: 'q' // NOTE: always promote to a queen for example simplicity
+            });
+            // illegal move
+            if (move === null) return 'snapback';
+            updateStatus();
+            squareHighlight();
+            GetPMoveResult(game.fen());
+        };
+        // update the board position after the piece snap
+        // for castling, en passant, pawn promotion
+        var onSnapEnd = function () {
+            board.position(game.fen());
+        };
+        var updateStatus = function () {
+            var status = '';
+            var moveColor = 'White';
+            if (game.turn() === 'b')
+                moveColor = 'Black';
+            // checkmate?
+            if (game.in_checkmate() === true)
+                status = 'Game over, ' + moveColor + ' is in checkmate.';
+            // draw?
+            else if (game.in_draw() === true)
+                status = 'Game over, drawn position';
+            // game still on
+            else {
+                status = moveColor + ' to move';
+                // check?
+                if (game.in_check() === true)
+                    status += ', ' + moveColor + ' is in check';
+            }
+            statusEl.html(status);
+            fenEl.html(game.fen());
+            //pgnEl.html(game.pgn());
+        };
+        var onMoveEnd = function() {
+            boardEl.find('.cb_square-' + squareToHighlight).addClass('cb_highlight-' + colorToHighlight);
+        };
+        var removeGreySquares = function() {
+            $('#board .cb_square').removeClass(['cb_overlay_l', 'cb_overlay_d']);
+        };
+        var greySquare = function(square) {
+            var squareEl = $('#board .cb_square-' + square);
+            var cls = 'cb_overlay_l';
+            if (squareEl.hasClass('cb_black') === true)
+                cls = 'cb_overlay_d';
+            squareEl.addClass(cls);
+        };
+        var onMouseoverSquare = function(square, piece) {
+            // get list of possible moves for this square
+            var moves = game.moves({
+                square: square,
+                verbose: true
+            });
+            // exit if there are no moves available for this square
+            if (moves.length === 0) return;
+            // highlight the square they moused over
+            if(!$('.cb_square-' + square).hasClass('cb_piece--active') && $('.cb_square').hasClass('cb_piece--active'))
+            return;
+            greySquare(square);
+            // highlight the possible squares for this piece
+            for (var i = 0; i < moves.length; i++) {
+                greySquare(moves[i].to);
+            }
+        };
+        var onMouseoutSquare = function(square, piece) {
+            if($('.cb_square').hasClass('cb_piece--active')) {
+                removeGreySquares();
+                onMouseoverSquare($('.cb_square.cb_piece--active').attr('data-square'), null);
+            } else
+                removeGreySquares();
+        };
+        var squareHighlight = function() {
+            var history = game.history({verbose: true});
+            var hlen = history.length;
+            if(hlen === 0) return;
+            boardEl.find('.cb_square').removeClass(['cb_highlight-black', 'cb_highlight-white']);
+            if (history[hlen-1].color === 'w') {
+                boardEl.find('.cb_square-' + history[hlen-1].from).addClass('cb_highlight-white');
+                squareToHighlight = history[hlen-1].to;
+                colorToHighlight = 'white';
+                boardEl.find('.cb_square-' + squareToHighlight).addClass('cb_highlight-' + colorToHighlight);
+            }
+            else {
+                boardEl.find('.cb_square-' + history[hlen-1].from).addClass('cb_highlight-black');
+                squareToHighlight = history[hlen-1].to;
+                colorToHighlight = 'black';
+                boardEl.find('.cb_square-' + squareToHighlight).addClass('cb_highlight-' + colorToHighlight);
+            }
+        };
+
+        var cfg = {
+            draggable: true,
+            position: curPosition,
+            onDragStart: onDragStart,
+            onDrop: onDrop,
+            onSnapEnd: onSnapEnd,
+            onMoveEnd: onMoveEnd,
+            onMouseoutSquare: onMouseoutSquare,
+            onMouseoverSquare: onMouseoverSquare,
+            orientation: '@ViewBag.Puzzle.Orientation'
+        };
+        board = ChessBoard('board', cfg);
+        squareHighlight();
+        updateStatus();
+    }
+    function TimerString() {
+        var s = sec % 60;
+        var m = ((sec - sec % 60) / 60) % 60;
+        var t1 = m > 9 ? m : '0' + m;
+        var t2 = s > 9 ? s : '0' + s;
+        sec++;
+        return t1+':'+t2;
+    }
+</script>
+
+<!-- Event snippet for Регистрация на сайте conversion page -->
+<script>gtag('event', 'conversion', { 'send_to': 'AW-738762129/4T8ECLWcjKEBEJG7ouAC' });</script>
+
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        ViewBag.Puzzle.CountUser(User.Identity.Name);
+    }
+}

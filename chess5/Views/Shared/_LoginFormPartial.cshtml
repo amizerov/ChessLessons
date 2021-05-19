@@ -1,0 +1,53 @@
+﻿    @using chess5.Models
+    @model LoginViewModel
+
+
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
+    {
+        <div class="modal__form__title">
+            <span>Вход в аккаунт</span>
+        </div>
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", id = "EmailLogin", placeholder = "Email", autocomplete = "current-email" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", id = "PasswordLogin", placeholder = "Пароль", autocomplete = "current-password" })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-inline form-group">
+            <a href="">Забыли пароль?</a>
+            <div class="c_checkbox">
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @*Html.LabelFor(m => m.RememberMe)*@
+                <label for="RememberMe"> Запомнить?</label>
+            </div>
+        </div>
+        <div class="submit-container">
+            <button class="btn btn-primary" type="submit">Войти</button>
+        </div>
+    }
+    <p class="auth__register-link"><a>Зарегистрируйтесь, если у вас нет аккаунта</a></p>
+    <section id="socialLoginForm">
+        @Html.Partial("../Account/_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        <!--<div class="social-auth-title">
+            <p>Войти через:</p>
+        </div>
+        <div class="social-auth-container">
+            <a href="" class="btn btn-primary facebook"><div class="icons8-facebook"></div>Facebook</a>
+            <a href="" class="btn btn-danger google"><div class="icons8-google"></div>Google</a>
+        </div>-->
+    </section>
+
+
+    @* Enable this once you have account confirmation enabled for password reset functionality
+        <p>
+            @Html.ActionLink("Forgot your password?", "ForgotPassword")
+        </p>*@
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

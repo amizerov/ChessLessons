@@ -1,0 +1,139 @@
+﻿@model chess4.Models.ASteps
+@{ 
+    ViewBag.Title = Model.Topic.Name;
+}
+
+<link rel="stylesheet" href="~/board/css/chessboard-0.3.0.css" />
+<script src="~/board/js/chessboard-0.3.0.js"></script>
+<script src="~/board/js/chess.js"></script>
+
+<style>
+    #idLessons {
+        background-color: antiquewhite;
+        padding-left: 5px;
+    }
+
+    td {
+        padding: 10px;
+        margin: 10px;
+    }
+
+    .Moves {
+        border: solid;
+        padding: 10px;
+        margin: 10px;
+    }
+
+    .TopicName {
+        cursor: pointer;
+        margin-bottom: 25px
+    }
+</style>
+
+<br />
+<table width="100%" border="0">
+    <tr>
+        <td width="1%">
+            <div id="board" style="width: 500px"></div>
+            <br />
+            <input type="button" value="Начальная" onclick="board.start()">
+            <input type="button" value="Очистить" onclick="board.clear()">
+            <input type="button" value="Из темы" onclick="board.position('@Model.Topic.Position');">
+            <input type="button" value="Последний шаг" onclick="board.position('@Model.Last_Position');">
+        </td>
+        <td width="50px"></td>
+        <td valign="top">
+            <h3 class="TopicName" onclick="document.location.href = '/Lessons/Topic/' + Topic_ID+'000'">@Model.Topic.Name</h3>
+            @using (Html.BeginForm("Step", "Lessons", FormMethod.Post))
+            {
+                <table border="0" width="100%">
+                    <tr><td>@Html.DropDownList("ID", new SelectList(Model, "ID", "Name"))<br /><br /></td></tr>
+                    <tr><td><input id="StepName" name="Name" style="width: 458px; padding: 5px;" value="Название хода"><br /><br /></td></tr>
+                    <tr>
+                        <td>
+                            Порядковый номер: <input id="OrderNumb" name="OrderNumb" style="width: 45px; padding: 5px;" value="0">&nbsp;&nbsp;&nbsp;
+                            <a class="Moves" href="/Lessons/Move/" onclick="this.href += Step_ID;">Ходы</a>
+                            <br /><br />
+                        </td>
+                    </tr>
+                    <tr><td><textarea id="Descr" name="Description" style="width: 458px; height: 300px; padding: 5px;">Описание</textarea><br /><br /></td></tr>
+                    <tr>
+                        <td>
+                            @Html.HiddenFor(m => m.Topic_ID)
+                            <input type="hidden" id="Position" name="Position" value="@Model.Last_Position" />
+                            <input type="hidden" id="Orientation" name="Orientation" value="@Model.Topic.Orientation" />
+                            <button onclick="Delete()"> Удалить </button>&nbsp;&nbsp;
+                            <input type="submit" value="Сохранить шаг" />&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                </table>
+            }
+        </td>
+    </tr>
+</table>
+<br /><br />
+
+<script>
+    var Step_ID = 0;
+    var Topic_ID = @Model.Topic_ID;
+
+    var onChange = function (oldPos, newPos) {
+        Position.value = ChessBoard.objToFen(newPos);
+    };
+    var cfg = {
+        draggable: true,
+        dropOffBoard: 'trash',
+        sparePieces: true,
+        onChange: onChange,
+        position: '@Model.Last_Position',
+        orientation: '@Model.Topic.Orientation'
+    };
+    var board = ChessBoard('board', cfg);
+
+    function OnStepSelectionChange() {
+        StepName.value = $("#ID").find("option:selected").text();
+        Step_ID = $("#ID").val();
+        GetStepDetails();
+
+        if (Step_ID == 0) {
+            $('a.Moves').hide();
+            board.position('@Model.Topic.Position');
+        }
+        else
+            $('a.Moves').show();
+    }
+
+    $(function () {
+        $("#ID").change(function () {
+            OnStepSelectionChange();
+        });
+
+        OnStepSelectionChange();
+    });
+
+    function GetStepDetails() {
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetStepDetails")',
+            data: { "Step_ID": Step_ID, "Topic_ID": Topic_ID },
+            dataType: 'json',
+            success: function (res) {
+                $('#Descr').html(res.Description);
+                $('#OrderNumb').val(res.OrderNumb);
+                var pos = res.Position;
+                if (pos == null || pos == "") pos = "@Model.Last_Position";
+                board.position(pos);
+                Position.value = pos;
+            },
+            error: function (emp) {
+                alert('error in GetStepDetails');
+            }
+        });
+    }
+
+    function Delete() {
+        StepName.value = 'Delete';
+    }
+
+</script>
+

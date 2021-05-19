@@ -1,0 +1,123 @@
+﻿<link rel="stylesheet" href="~/board/css/chessboard-0.3.0.css" />
+<script src="~/board/js/chessboard-0.3.0.js"></script>
+<script src="~/board/js/chess.js"></script>
+
+<style>
+    #idLessons {
+        background-color: antiquewhite;
+        padding-left: 5px;
+    }
+    td {
+        padding: 10px;
+        margin: 10px;
+    }
+    .Topics {
+        border: solid;
+        padding: 10px;
+        margin: 10px;
+    }
+</style>
+
+<br />
+<table width="100%" border="0">
+    <tr>
+        <td width="1%">
+            <div id="board" style="width: 500px"></div>
+            <br />
+            <input type="button" value="Начальная" onclick="board.start()">
+            <input type="button" value="Очистить" onclick="board.clear()">
+            <input type="button" value="Повернуть" onclick="board.flip(); Orientation.value = board.orientation();">
+        </td>
+        <td width="50px"></td>
+        <td valign="top">
+            <h3>Выбери или создай новый Урок</h3>
+
+            @using (Html.BeginForm("Lesson", "Lessons", FormMethod.Post))
+            {
+                <table border="0" width="100%">
+                    <tr><td>@Html.DropDownList("ID", ViewBag.Lessons as SelectList)<br /><br /></td></tr>
+                    <tr><td><input id="LesName" name="Name" style="width: 458px; padding: 5px;" value="Название урока"><br /><br /></td></tr>
+                    <tr>
+                        <td>
+                            Порядковый номер: <input id="OrderNumb" name="OrderNumb" style="width: 45px; padding: 5px;" value="0">&nbsp;
+                            <a class="Topics" href="/Lessons/Topic/" onclick="this.href += Lesson_ID">Задания</a>
+                            <br /><br />
+                        </td>
+                    </tr>
+                    <tr><td><textarea id="Descr" name="Description" style="width: 458px; height: 300px; padding: 5px;">Описание</textarea><br /><br /></td></tr>
+                    <tr>
+                        <td>
+                            <input type="hidden" id="Position" name="Position" value="8/8/8/8/8/8/8" />
+                            <input type="hidden" id="Orientation" name="Orientation" value="white" />
+                            <button onclick="Delete()"> Удалить </button>&nbsp;&nbsp;
+                            <input type="submit" value="Сохранить урок" />&nbsp;&nbsp;
+
+                        </td>
+                    </tr>
+                </table>
+            }
+        </td>
+    </tr>
+</table>
+<br /><br />
+
+<script>
+        var Lesson_ID = 0;
+
+        var onChange = function (oldPos, newPos) {
+            Position.value = ChessBoard.objToFen(newPos);
+        };
+        var cfg = {
+            draggable: true,
+            dropOffBoard: 'trash',
+            sparePieces: true,
+            onChange: onChange
+        };
+        var board = ChessBoard('board', cfg);
+
+        function OnLessonSelectionChange() {
+            LesName.value = $("#ID").find("option:selected").text();
+            Lesson_ID = $("#ID").val();
+            if (Lesson_ID == 0) $('a.Topics').hide();
+            else
+                $('a.Topics').show();
+
+            GetLessonDetails();
+        }
+
+        $(function () {
+            $("#ID").change(function () {
+                OnLessonSelectionChange();
+            });
+
+            OnLessonSelectionChange();
+        });
+
+        function GetLessonDetails() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetLessonDetails")',
+                data: { "Lesson_ID": Lesson_ID },
+                dataType: 'json',
+                success: function (res) {
+                    $('#Descr').html(res.Description);
+                    var pos = res.Position;
+                    var ori = res.Orientation;
+                    $('#OrderNumb').val(res.OrderNumb);
+                    if (pos == null) pos = "8/8/8/8/8/8/8/8";
+
+                    board.position(pos); board.orientation(ori);
+                    Position.value = pos; Orientation.value = ori;
+                },
+                error: function (emp) {
+                    alert('error in GetLessonDetails');
+                }
+            });
+        }
+
+        function Delete() {
+            LesName.value = 'Delete';
+        }
+
+</script>
+

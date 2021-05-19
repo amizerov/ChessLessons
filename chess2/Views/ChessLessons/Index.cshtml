@@ -1,0 +1,16 @@
+﻿@model chess2.Models.CLessons
+
+@{
+    ViewBag.Title = "LessonsList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>$('#chess').css('background-color', '#4f66ac');</script>
+<script>$('#chess').css('border-radius', '15px');</script>
+
+<h2>Уроки</h2>
+<div style="font-size:22px">
+    @foreach (var l in Model)
+    {
+        <a href="/ChessLessons/Topics/@l.ID">@l.Name</a><br />
+    }
+</div>

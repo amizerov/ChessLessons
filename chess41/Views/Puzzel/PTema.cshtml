@@ -1,0 +1,87 @@
+﻿<link rel="stylesheet" href="~/board/css/chessboard-0.3.0.css" />
+<script src="~/board/js/chessboard-0.3.0.js"></script>
+<script src="~/board/js/chess.js"></script>
+
+<style>
+    .Puzzles { border: solid; padding: 10px; margin: 10px; }
+    #ID{ font-size:22px; padding:5px; margin: 5px; width: 100%; }
+    #TemName { font-size:18px;padding:5px; margin: 5px; }
+    textarea{ width:98%; margin:5px; padding:3px; height:200px; }
+    .textareacontainer{ background-color:antiquewhite; }
+</style>
+
+<br /><br />
+@using (Html.BeginForm("PTema", "Puzzel", FormMethod.Post))
+{
+    <table border="0" width="100%">
+        <tr><td>@Html.DropDownList("ID", ViewBag.PTemas as SelectList)<br /><br /></td></tr>
+        <tr><td><input id="TemName" name="Name" style="width: 458px; padding: 5px;" value="Название урока"><br /><br /></td></tr>
+        <tr>
+            <td style="padding:5px;">
+                Порядковый номер: <input id="OrderNumb" name="OrderNumb" style="width: 45px; padding: 5px;" value="0">&nbsp;
+                <a class="Puzzles" href="#" onclick="document.location.href = '/Puzzel/Puzzle/' + PTema_ID;">Задачи</a>
+                <br /><br />
+            </td>
+        </tr>
+        <tr>
+            <td class="textareacontainer">
+                <textarea id="Descr" name="Description">Описание</textarea><br /><br />
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px;">
+                <button onclick="Delete()" id="Btn_Delete_ID"> Удалить </button>&nbsp;&nbsp;
+                <input type="submit" value="Сохранить тему" />&nbsp;&nbsp;
+            </td>
+        </tr>
+    </table>
+}
+<br /><br />
+
+<script>
+        var PTema_ID = 0;
+
+        function OnPTemaSelectionChange() {
+            TemName.value = $("#ID").find("option:selected").text();
+            PTema_ID = $("#ID").val();
+            if (PTema_ID == 0) {
+                $('a.Puzzles').hide();
+                $('#Btn_Delete_ID').attr('disabled', 'disabled');
+            }
+            else {
+                $('a.Puzzles').show();
+                $('#Btn_Delete_ID').removeAttr('disabled');
+            }
+            GetPTemaDetails();
+        }
+
+        $(function () {
+            $("#ID").change(function () {
+                OnPTemaSelectionChange();
+            });
+
+            OnPTemaSelectionChange();
+        });
+
+        function GetPTemaDetails() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetPTemaDetails")',
+                data: { "PTema_ID": PTema_ID },
+                dataType: 'json',
+                success: function (res) {
+                    $('#Descr').html(res.Description);
+                    $('#OrderNumb').val(res.OrderNumb);
+                },
+                error: function (emp) {
+                    alert('error in GetPTemaDetails');
+                }
+            });
+        }
+
+        function Delete() {
+            TemName.value = 'Delete';
+        }
+
+</script>
+

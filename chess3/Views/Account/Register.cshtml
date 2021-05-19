@@ -1,0 +1,48 @@
+﻿@using chess5.Models
+@model RegisterViewModel
+@{
+    ViewBag.Title = "Регистрация";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+}
+<div class="form-panel">
+    <div class="logo-container">
+        <p><img src="~/img/Logo1.png"></p>
+    </div>
+    <div class="form-wrapper">
+        <div class="modal__form__title">
+            <span>@ViewBag.Title</span>
+        </div>
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @*@Html.LabelFor(m => m.Email, new { @class = "control-label" })*@
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+            </div>
+            <div class="form-group">
+                @*@Html.LabelFor(m => m.Password, new { @class = "control-label" })*@
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Пароль" })
+            </div>
+            <div class="form-group">
+                @*@Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })*@
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Подтверждение пароля" })
+            </div>
+            <div class="submit-container">
+                <button class="btn btn-primary" type="submit">Регистрация</button>
+            </div>
+            <section id="socialLoginForm">
+                <div class="social-auth-title">
+                    <p>Регистрация через:</p>
+                </div>
+                <div class="social-auth-container">
+                    <button type="button" class="btn btn-primary facebook"><div class="icons8-facebook"></div>Facebook</button>
+                </div>
+            </section>
+            }
+        </div>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

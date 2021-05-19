@@ -1,0 +1,157 @@
+﻿<div class="col-lg-12" id="posts">
+    <div class="content__title">
+        <h1>Блог</h1>
+    </div>
+    <div class="posts-catalog">
+        <div class="posts row">
+            <div class="col-md-6 news-card" style="margin-bottom: 30px;">
+                <div class="panel-w2">
+                    <!-- if has image-->
+                    <div class="news-image">
+                        <a href="#">
+                            <img src="/img/news/Кубок9.jpg">
+                        </a>
+                    </div>
+                    <!-- endif -->
+                    <div class="news-card-content">
+                        <h4><a class="news-title" href="/Blog/test">test</a></h4>
+                        <div class="post-date">
+                            <p><small><i class="far fa-clock"></i> 20.04.2020</small></p>
+                        </div>
+                        <div class="news-short-desc"><p>Cras malesuada sapien enim, bibendum venenatis est tincidunt in. Proin aliquam facilisis ante, in viverra est efficitur vel. Vestibulum convallis odio quis imperdiet ullamcorper. Quisque malesuada tellus nibh, vitae tincidunt elit ullamcorp...</p></div>
+                        <a href="/Blog/test" class="btn-link">Подробнее...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-6 news-card" style="margin-bottom: 30px;">
+                <div class="panel-w2">
+                    <div class="news-card-content">
+                        <h4><a class="news-title" href="/Blog/novost-vtoraya">Новость вторая</a></h4>
+                        <div class="post-date">
+                            <p><small><i class="far fa-clock"></i> 23.04.2020</small></p>
+                        </div>
+                        <div class="news-short-desc"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum dapibus ex at augue eleifend feugiat. Donec rhoncus convallis massa convallis semper. Sed euismod enim ac justo interdum tristique. Fusce finibus tortor tellus, vel suscipi...</p></div>
+                        <a href="/Blog/novost-vtoraya" class="btn-link">Подробнее...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-6 news-card" style="margin-bottom: 30px;">
+                <div class="panel-w2">
+                    <div class="news-card-content">
+                        <h4><a class="news-title" href="/Blog/tretya-novost">Третья новость</a></h4>
+                        <div class="post-date">
+                            <p><small><i class="far fa-clock"></i> 23.04.2020</small></p>
+                        </div>
+                        <div class="news-short-desc"><p>Aenean imperdiet quam turpis, ut vulputate magna consequat ac. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris dictum urna purus, eget tincidunt justo rutrum eu. Proin scelerisque bibendum tincidunt. Sed pellentesque ni...</p></div>
+                        <a href="/Blog/tretya-novost" class="btn-link">Подробнее...</a>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+		
+		<div class="row">
+            <div class="col-md-12">
+                <ul class="pagination" role="navigation">
+					<li class="active" aria-current="page"><span>1</span></li>
+					<li><a href="/Blog?page=2">2</a></li>
+					<li><a href="/Blog?page=3">3</a></li>
+				</ul>
+            </div>
+        </div>
+		
+    </div>
+</div>
+
+
+<br><br><br><br>
+
+
+<div class="col-lg-9 page--home_new">
+    <div class="panel">
+        <div class="row">
+            <div class="col-md-12 post" style="margin-bottom: 25px;">
+
+                <div class="post-head">
+                    <!-- if has image-->
+                    <div class="post-image my-5">
+                        <img src="/img/news/Кубок9.jpg">
+                    </div>
+                    <!-- endif -->
+
+                    <div class="post-head-meta">
+                        <h1 class="post-title">test</h1>
+                        <div class="post-date">
+                            <p><i class="far fa-clock"></i> 20.04.2020</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-content panel-w2">
+                    Cras malesuada sapien enim, bibendum venenatis est tincidunt in. Proin aliquam facilisis ante, in viverra est efficitur vel. Vestibulum convallis odio quis imperdiet ullamcorper. Quisque malesuada tellus nibh, vitae tincidunt elit ullamcorper non.
+                    Nullam fermentum sodales erat, scelerisque iaculis est egestas sed. Etiam porta nisl nec scelerisque bibendum. Proin euismod turpis id tristique dapibus. Quisque ut auctor odio, nec rhoncus dui. Vestibulum nec enim vitae nisi hendrerit placerat. Fusce placerat vitae lorem et imperdiet. Pellentesque ac dui accumsan, sagittis lectus sed, dictum ligula.
+                </div>
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-md-8">
+                <h4>Комментарии</h4>
+                <div class="post-comments">
+					<div class="post-comment panel-w2">
+						<div class="comment-header">
+							<span>Автор: 21</span>
+							<div class="comment-header-right">
+								<form onsubmit="if(confirm('Удалить?')){ return true }else{ return false }" action="/post/destroy_comment/2" method="post">
+									<input type="hidden" name="_method" value="DELETE">
+									<button type="submit" class="btn btn-link">Удалить <i class="far fa-trash-alt"></i></button>
+								</form>
+							</div>
+						</div>
+						<div class="comment-content">
+							<p>Комментарий: first comment</p>
+						</div>
+					</div>
+					<div class="post-comment panel-w2">
+						<div class="comment-header">
+							<span>Автор: 21</span>
+								<div class="comment-header-right">
+									<form onsubmit="if(confirm('Удалить?')){ return true }else{ return false }" action="/post/destroy_comment/3" method="post">
+										<input type="hidden" name="_method" value="DELETE">
+										<button type="submit" class="btn btn-link">Удалить <i class="far fa-trash-alt"></i></button>
+									</form>
+								</div>
+							</div>
+						<div class="comment-content">
+							<p>Комментарий: comment2</p>
+						</div>
+					</div>
+				</div>
+                <div>
+                    <a class="anchor-link" name="add-comment"></a>
+                    <h4>Добавить комментарий</h4>
+                </div>
+                @if (User.Identity.IsAuthenticated)
+				{
+					<form class="comment-form " action="/post/add_comment" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="post_id" value="1">
+						<div class="form-group">
+							<textarea class="form-control" name="description" placeholder="Комментарий"></textarea>
+						</div>
+						<div class="form-group">
+							<input class="btn-3" style="width: auto;padding: 5px 15px;" type="submit" value="Отправить">
+						</div>
+					</form>
+				} else
+				{
+					<div>
+						<p><a href="#" onclick="event.preventDefault();modal_open('login')">Войдите в аккаунт</a> или <a href="#" onclick="event.preventDefault();modal_open('register')">зарегистрируйтесь</a> чтобы оставить комментарий</p>
+					</div>
+				}
+			</div>
+        </div>
+    </div>
+</div>
+
+

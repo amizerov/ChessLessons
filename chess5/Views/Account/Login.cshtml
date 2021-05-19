@@ -1,0 +1,77 @@
+﻿@using chess5.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Вход в аккаунт";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+}
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '312467269403748',
+            cookie: true,
+            xfbml: true,
+            version: 'v3.2'
+        });
+        FB.AppEvents.logPageView();
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="form-panel">
+    <div class="logo-container" style="cursor:pointer" onclick="document.location.href='/'">
+        <p><img src="~/img/Logo1.png"></p>
+    </div>
+    <div class="form-wrapper">
+
+        <div class="modal__form__title">
+            <span>@ViewBag.Title</span>
+        </div>
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Пароль" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-inline form-group">
+                <a href="">Забыли пароль?</a>
+                <div class="c_checkbox">
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @*Html.LabelFor(m => m.RememberMe)*@
+                    <label for="RememberMe"> Запомнить?</label>
+                </div>
+            </div>
+            <div class="submit-container">
+                <button class="btn btn-primary" type="submit">Войти</button>
+            </div>
+        }
+        <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+        <p class="auth__register-link">
+            @Html.ActionLink("Зарегистрируйтесь, если у вас нет аккаунта", "Register")
+        </p>
+
+        @* Enable this once you have account confirmation enabled for password reset functionality
+            <p>
+                @Html.ActionLink("Forgot your password?", "ForgotPassword")
+            </p>*@
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

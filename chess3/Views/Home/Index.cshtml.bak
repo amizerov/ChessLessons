@@ -1,0 +1,120 @@
+﻿@using Microsoft.AspNet.Identity
+@model chess5.Models.News
+@{
+    ViewBag.Title = "Уроки по шахматам! ChessCoin - новая криптовалюта";
+    ViewBag.Description = "Уроки по шахматам, игра, задачи! Игра онлайн с живыми игроками! ChessCoin";
+    ViewBag.GetRequest = "home";
+    ViewBag.ColContentClasses = "";
+}
+
+<link rel="stylesheet" href="~/board/css/new_chessboard.css" />
+<script src="~/board/js/new_chessboard.js?v=101"></script>
+<script src="~/board/js/chess.js"></script>
+
+<div class="col-md-7 page--home_new">
+    <div class="panel">
+        <div class="content__title header_home">
+            <h1 class="with_content_img with_after_img---crown">Интерактивные уроки по шахматам</h1>
+            <div style="font-size:larger;font-style:italic;font-weight:bold;padding-left:50px;padding-right:50px">
+                Интерактивные уроки - самый быстрый и легкий способ научиться играть в шахматы или повысить свой уровень игры
+            </div>
+            <div class="mt-50 mb-100">
+                <h4><i class="far fa-check-circle"></i> <b>@Model.RegisteredUsersCount пользователей зарегистрировано и уже играют на сайте</b></h4>
+                <h4><i class="far fa-check-circle"></i> <b>Проходите интерактивные уроки. Обучитесь стратегиям и тактике</b></h4>
+                <h4><i class="far fa-check-circle"></i> <b>Играй онлайн с живыми игроками, решай задачи, зарабатывай ChessCoin!</b></h4>
+            </div>
+            <div class="flx flx_jc_sb mt-25 mb-25">
+                <a class="btn btn-primary btn---orange" href="/Game">Играть онлайн</a>
+                <a class="btn btn-primary btn---blue" href="/Lessons">Начать урок</a>
+            </div>
+        </div>
+        <hr>
+        <div class="content__title mt-25 mb-15">
+            <h2>События в мире шахмат</h2>
+        </div>
+        <div class="content__block content__home">
+            <div class="content__panel news_chess_panel" style="background-image: linear-gradient(90deg, #ffffffdb, #ffffff75), url(/img/news/@Model.ImageSrc);">
+                <div class="news_chess_desc">
+                    <h4>@Model.Title</h4>
+                    <div class="news_chess_text">
+                        <p>@Model.TextHtml</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-5 page--home_new  with_before_img---piece3_invert" style="padding-left: 0;">
+    @if (Request.IsAuthenticated)
+    {
+        <div class="panel panel__stat" style="padding-bottom: 31px;">
+            <div class="content__title">
+                <h2>Статистика</h2>
+            </div>
+            <p style="margin: 20px 0 10px;"><i class="fas fa-user-alt"></i> <b>@User.Identity.GetUserName()</b></p>
+            <div class="ps_l">
+                <div class="ps_i_l"><span><i class="fas fa-money-bill"></i> Chess Coins:</span></div>
+                <div class="ps_i_r"><span>@Model.Stat.UserAccount.ChessCoin</span><img class="chess-coin" src="./img/chess-coin3.svg"></div>
+                <div class="ps_hr"></div>
+            </div>
+            <div class="ps_l">
+                <div class="ps_i_l"><span><i class="far fa-chart-bar"></i> Рейтинг игра:</span></div>
+                <div class="ps_i_r"><span>@Model.Stat.UserAccount.RatingGame</span></div>
+                <div class="ps_hr"></div>
+            </div>
+            <div class="ps_l">
+                <div class="ps_i_l"><span><i class="far fa-chart-bar"></i> Рейтинг задачи:</span></div>
+                <div class="ps_i_r"><span>@Model.Stat.UserAccount.RatingPuzzle</span></div>
+                <div class="ps_hr"></div>
+            </div>
+            <div class="ps_l">
+                <div class="ps_i_l"><span><i class="far fa-chart-bar"></i> Рейтинг уроки:</span></div>
+                <div class="ps_i_r"><span>@Model.Stat.UserAccount.RatingLesson</span></div>
+                <div class="ps_hr"></div>
+            </div>
+        </div>
+    }
+    <div class="panel with_after_img---piece5" style="padding-bottom: 25px;">
+        <!--
+        <div class="content__title with_content_img with_before_img---piece5">
+            <h2>Новости сайта</h2>
+        </div>
+        -->
+        <div class="content__block content__home">
+            @if (!Request.IsAuthenticated)
+            {
+                <div class="content__panel ">
+                    <div class="content__board_left" id="board1" onclick="document.location.href = '/Puzzles/Puzzle/@Model.LastPuzzle.ID'" style="width: 40%;cursor:pointer;"></div>
+                    <script>ChessBoard('board1', '@Model.LastPuzzle.Position').orientation('@Model.LastPuzzle.Orientation');</script>
+                    <b>@Model.LastPuzzle.Date.Substring(0, 10)</b>
+                    <h4><a href="/Puzzles/Puzzle/@Model.LastPuzzle.ID"><b>Новая задача в разделе: "@Model.LastPuzzle.Tema.Name"</b></a></h4>
+                </div>
+            }
+            <div class="content__panel">
+                <div class="content__board_left" id="board3" onclick="document.location.href = '/Lessons/Lesson/@Model.LastLesson.ID'" style="width: 40%;cursor:pointer;"></div>
+                <script>ChessBoard('board3', '@Model.LastLesson.Position').orientation('@Model.LastLesson.Orientation');</script>
+                <b>@Model.LastLesson.Date.Substring(0, 10)</b>
+                <h4><a href="/Lessons/Lesson/@Model.LastLesson.ID"><b>Новый урок: "@Model.LastLesson.Name"</b></a></h4>
+                <div>@Model.LastLesson.Description</div>
+            </div>
+            <div class="content__panel ">
+                <div class="content__board_left" id="board2" onclick="document.location.href = '/Puzzles/Puzzle/@Model.PuzzleOfDay.ID'" style="width: 40%;cursor:pointer;"></div>
+                <script>ChessBoard('board2', '@Model.PuzzleOfDay.Position').orientation('@Model.PuzzleOfDay.Orientation');</script>
+                <h4><a href="/Puzzles/Puzzle/@Model.PuzzleOfDay.ID"><b>Задача дня: @Model.PuzzleOfDay.Tema.Name</b></a></h4>
+            </div>
+        </div>
+        <!--
+        <hr class="mt-15">
+        <div class="content__title mt-25 mb-15 with_content_img ">
+            <h2>Задача дня</h2>
+        </div>
+        <div class="content__block content__home" style="margin-bottom: 30px;">
+            <div class="content__panel ">
+                <div class="content__board_left" id="board2" onclick="document.location.href = '/Puzzles/Puzzle/@Model.PuzzleOfDay.ID'" style="width: 30%;cursor:pointer;"></div>
+                <script>ChessBoard('board2', '@Model.PuzzleOfDay.Position').orientation('@Model.PuzzleOfDay.Orientation');</script>
+                <h4><a href="/Puzzles/Puzzle/@Model.PuzzleOfDay.ID"><b>@Model.PuzzleOfDay.Tema.Name</b></a></h4>
+            </div>
+        </div>
+        -->
+    </div>
+</div>

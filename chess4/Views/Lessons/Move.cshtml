@@ -1,0 +1,149 @@
+﻿@model chess4.Models.AMoves
+
+<link rel="stylesheet" href="~/board/css/chessboard-0.3.0.css" />
+<script src="~/board/js/chessboard-0.3.0.js"></script>
+<script src="~/board/js/chess.js"></script>
+
+<style>
+    #idLessons {
+        background-color: antiquewhite;
+        padding-left: 5px;
+    }
+
+    td {
+        padding: 10px;
+        margin: 10px;
+    }
+
+    .StepName {
+        cursor: pointer;
+        margin-bottom: 25px
+    }
+</style>
+
+<br />
+<table width="100%" border="0">
+    <tr>
+        <td width="1%">
+            <div id="board" style="width: 500px"></div>
+            <br />
+            <input type="button" value="Начальная" onclick="board.start()">
+            <input type="button" value="Очистить" onclick="board.clear()">
+            <input type="button" value="Из шага" onclick="board.position('@Model.Step.Position');">
+            <input type="text" id="fenPosition" value="@Model.Step.Position" style="width:250px" />
+        </td>
+        <td width="50px"></td>
+        <td valign="top">
+            <h3 class="StepName" onclick="document.location.href = '/Lessons/Step/' + Step_ID+'000'">@Model.Step.Name</h3>
+            @using (Html.BeginForm("Move", "Lessons", FormMethod.Post))
+            {
+                <table border="0" width="100%">
+                    <tr><td>@Html.DropDownList("ID", new SelectList(Model, "ID", "Name"))<br /><br /></td></tr>
+                    <tr><td><input id="MoveName" name="Name" style="width: 458px; padding: 5px;" value="Название шага"><br /><br /></td></tr>
+                    <tr>
+                        <td>
+                            № <input id="OrderNumb" name="OrderNumb" style="width: 45px; padding: 5px;" value="0">&nbsp;&nbsp;&nbsp;
+                            <select id="CorrectMove" name="Correctness">
+                                <option value="1">Правильный</option>
+                                <option value="2">Альтернативный</option>
+                                <option value="3">Не правильный</option>
+                            </select>
+                            <br /><br />
+                        </td>
+                    </tr>
+                    <tr><td>@Html.DropDownList("LastCorrD", new SelectList(Model.Last5CorrDescr, "ID", "Description"))<br /><br /></td></tr>
+                    <tr>
+                        <td>
+                            <textarea id="Descr" name="Description" onkeydown="DescrKeyDown();" style="width: 458px; height: 300px; padding: 5px;">
+                                Описание
+                            </textarea><br /><br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.HiddenFor(m => m.Step_ID)
+                            <input type="hidden" id="Position" name="Position" value="@Model.Step.Position" />
+                            <button onclick="Delete()"> Удалить </button>&nbsp;&nbsp;
+                            <input type="submit" value="Сохранить ход" />&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                </table>
+            }
+        </td>
+    </tr>
+</table>
+<br /><br />
+
+<script>
+    var Move_ID = 0;
+    var Step_ID = @Model.Step_ID;
+
+    var onChange = function (oldPos, newPos) {
+        Position.value = ChessBoard.objToFen(newPos);
+        fenPosition.value = ChessBoard.objToFen(newPos);
+    };
+    var cfg = {
+        draggable: true,
+        dropOffBoard: 'trash',
+        sparePieces: true,
+        onChange: onChange,
+        position: '@Model.Step.Position',
+        orientation: '@Model.Step.Orientation'
+    };
+    var board = ChessBoard('board', cfg);
+
+    function DescrKeyDown() {
+        if (event.keyCode == 113) {
+            $('#Descr').html('@Model.Last5CorrDescr[0].Description');
+        }
+    }
+
+    function OnMoveSelectionChange() {
+        MoveName.value = $("#ID").find("option:selected").text();
+        Move_ID = $("#ID").val();
+
+        GetMoveDetails();
+
+        if (Move_ID == 0)
+            board.position('@Model.Step.Position');
+    }
+
+    $(function () {
+        $("#ID").change(function () {
+            OnMoveSelectionChange();
+        });
+
+        $("#LastCorrD").change(function () {
+            $('#Descr').html($("#LastCorrD").find("option:selected").text());
+        });
+
+        OnMoveSelectionChange();
+    });
+
+    function GetMoveDetails() {
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetMoveDetails")',
+            data: { "Move_ID": Move_ID, "Step_ID": Step_ID },
+            dataType: 'json',
+            success: function (res) {
+                $('#Descr').html(res.Description);
+                $('#OrderNumb').val(res.OrderNumb);
+                $('#CorrectMove option[value=' + res.Correctness + ']').prop('selected', true);
+                var pos = res.Position;
+                if (pos == null || pos == "") pos = "@Model.Step.Position";
+                board.position(pos);
+                Position.value = pos;
+            },
+            error: function (emp) {
+                alert('error in GetMoveDetails');
+            }
+        });
+    }
+
+    function Delete() {
+        MoveName.value = 'Delete';
+    }
+
+</script>
+

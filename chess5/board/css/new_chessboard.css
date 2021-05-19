@@ -1,0 +1,35 @@
+ 
+/*!
+ * chessboard.js v0.3.0
+ *
+ * Copyright 2013 Chris Oakman
+ * Released under the MIT license
+ * https://github.com/oakmac/chessboardjs/blob/master/LICENSE
+*
+* Date: 10 Aug 2013
+*/
+
+.cb_black {
+    background-color: hsl(27, 36%, 55%);
+    color: hsl(27, 45%, 88%);
+}
+
+.cb_white {
+    background-color: hsl(27, 45%, 88%);
+    color: hsl(27, 36%, 55%);
+}
+
+.cb_notation {
+    cursor: default;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    position: absolute;
+}
+.cb_alpha {
+    bottom: 1px;
+    right: 3px;
+}
+.cb_numeric {
+    top: 2px;
+    left: 2px;
+}

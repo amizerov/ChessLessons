@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Chess Lessons - Уроки шахмат для начинающих</title>
+    <meta name="description" content="Шахматы для начинающих на русском языке. @ViewBag.Description" />
+    <meta name="keywords" content="шахматы пешка король ферзь ладья конь слон шах мат пат дебют на русском языке">
+    <!--
+    Styles.Render("~/Content/css")
+    Scripts.Render("~/bundles/modernizr")
+    -->
+    <link rel="stylesheet" type="text/css" href="~/Content/style/bootstrap_3_3.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/style/general.css?v=199">
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css?v=4">
+    <link rel="stylesheet" type="text/css" href="~/Content/style/icons.css?v=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript">
+        function getCookie(cn) {
+            var n = cn + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(n) === 0)
+                    return c.substring(n.length, c.length);
+            }
+            return '';
+        }
+        function main_sidebar_cookie() {
+            var c = getCookie("main_sidebar");
+            if (c === "collapsed")
+                document.getElementById("wrapper").className += " main-sidebar__collapsed";
+            else if (c === "default")
+                document.getElementById("wrapper").classList.remove("main-sidebar__collapsed");
+        }
+        function getCbPieceClass() {
+            var body = $('body');
+            var body_clss = body.attr('class');
+            
+            if(typeof body_clss !== 'undefined' && body_clss.length > 0)
+                body.removeClass(['cb_piece--tour_new', 'cb_piece--chess24', 'cb_piece--wikipedia', 'cb_piece--metro']);
+            
+            if (localStorage['cb_piece'])
+                $('body').addClass('cb_piece--' + localStorage['cb_piece']);
+        };
+        function getCbColorClass() {
+            var body = $('body');
+            var body_clss = body.attr('class');
+            
+            if(typeof body_clss !== 'undefined' && body_clss.length > 0)
+                body.removeClass(['cb_color--default', 'cb_color--blue', 'cb_color--green', 'cb_color--grey', 'cb_color--wood1', 'cb_color--wood2']);
+            
+            if (localStorage['cb_color'])
+                $('body').addClass('cb_color--' + localStorage['cb_color']);
+            else {
+                localStorage['cb_color'] = 'blue';
+                $('body').addClass('cb_color--' + localStorage['cb_color']);
+            }
+        };
+        function getSiteColorClass() {
+            var body = $('body');
+            var body_clss = body.attr('class');
+            
+            if(typeof body_clss !== 'undefined' && body_clss.length > 0)
+                body.removeClass(['site_color--default', 'site_color--blue', 'site_color--green', 'site_color--grey']);
+            
+            if (localStorage['site_color'])
+                $('body').addClass('site_color--' + localStorage['site_color']);
+        };
+        function getSiteBg() {
+            var body = $('body');
+            var body_clss = body.attr('class');
+            
+            if(typeof body_clss !== 'undefined' && body_clss.length > 0)
+                body.removeClass(['site_bg--default', 'site_bg--1', 'site_bg--2', 'site_bg--3', 'site_bg--4', 'site_bg--5']);
+            
+            if (localStorage['site_bg'])
+                $('body').addClass('site_bg--' + localStorage['site_bg']);
+        };
+
+        const settingsSiteVals = {
+            site_color: ['site_color--default', 'site_color--blue', 'site_color--green', 'site_color--grey'],
+            site_bg:    ['site_bg--default', 'site_bg--1', 'site_bg--2', 'site_bg--3', 'site_bg--4', 'site_bg--5'],
+            cb_color:   ['cb_color--default', 'cb_color--blue', 'cb_color--green', 'cb_color--grey', 'cb_color--wood1', 'cb_color--wood2']
+        };
+
+        const settingsSiteDef = {
+            site_color: 'site_color--default',
+            site_bg:    'site_bg--default',
+            cb_color:   'cb_color--default',
+            cb_piece:   'cb_piece--tour_new'
+        };
+        
+        function setSavedValues() {
+        
+            if( settingsSiteVals.site_color.includes(localStorage['site_color']) === false)
+                localStorage['site_color'] = settingsSiteDef.site_color;
+
+            if( settingsSiteVals.cb_color.includes(localStorage['cb_color']) === false)
+                localStorage['cb_color'] = settingsSiteDef.cb_color;
+
+            if( settingsSiteVals.site_bg.includes(localStorage['site_bg']) === false)
+                localStorage['site_bg'] = settingsSiteDef.site_bg;
+
+            if (localStorage['site_color']) {
+                $('body').removeClass(settingsSiteVals.site_color);
+                $('body').addClass(localStorage['site_color']);
+            }
+
+            if (localStorage['cb_color']){
+                $('body').removeClass(settingsSiteVals.cb_color);
+                $('body').addClass(localStorage['cb_color']);
+            }
+
+            if (localStorage['site_bg']){
+                $('body').removeClass(settingsSiteVals.site_bg);
+                $('body').addClass(localStorage['site_bg']);
+            }
+
+        }
+        
+        function init() {
+            //getCbColorClass();
+            //getCbPieceClass();
+            //getSiteColorClass();
+            //getSiteBg();
+            setSavedValues();
+        };
+    </script>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+    <meta name="yandex-verification" content="5a01c0aaad8c2c24" />
+</head>
+<body>
+    <script type="text/javascript">init();</script>
+    <div id="wrapper" class="form_page">
+        <div class="main-wrapper">
+            <div class="content-wrapper container-fluid">
+                <main class="main-content">
+                    <div class="row">
+                        <div class="col-content">
+                            <div class="panel transparent-panel">
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <footer class="main-footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="footer-content">
+                                <li>
+                                    <span>&copy; 2019 - Chess Lessons - Уроки шахмат по русски</span>
+                                </li>
+                                <li>
+                                    <a href="/user/politika"><span>Политика конфиденциальности</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+            m[i].l = 1 * new Date(); k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+        })
+            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(51687389, "init", {
+            id: 51687389,
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true,
+            webvisor: true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/51687389" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+    
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/script/script.js?v=132"></script>
+
+</body>
+</html>

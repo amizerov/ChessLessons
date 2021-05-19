@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <title>@ViewBag.Title - ChessNok.com</title>
+    <!--Styles.Render("~/Content/css")-->
+    <link href="/Content/bootstrap.css" rel="stylesheet">
+    <link href="/Content/site.css?v=5" rel="stylesheet">
+    @Scripts.Render("~/bundles/modernizr")
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top" style="background-image:url('/img/Logo.png'); background-repeat:no-repeat">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (User.IsInRole("Admin") || User.IsInRole("AdminLesson"))
+                    {
+                        <li id="idLessons">@Html.ActionLink("Уроки", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    }
+                    @if (User.IsInRole("Admin") || User.IsInRole("AdminPuzzle"))
+                    {
+                        <li id="idPuzzle"><a class="navbar-brand" href="http://admin.puzzle.chessnok.com">Задачи</a></li>
+                    }
+                    @if (User.IsInRole("Admin") || User.IsInRole("AdminNews"))
+                    {
+                        <li id="idNews">@Html.ActionLink("Новости", "Index", "News", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li id="idSettings">@Html.ActionLink("Настройки", "Index", "Settings", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+
+        @RenderBody()
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

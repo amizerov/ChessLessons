@@ -1,0 +1,453 @@
+﻿@model chess5.Models.IndexViewModel
+@{
+    ViewBag.Title = "Chess Lessons - Профиль игрока / ученика";
+}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/2.0.0-alpha/cropper.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/2.0.0-alpha/cropper.min.js"></script>
+
+<div class="col-md-12 page--home_new page--manage">
+    <div class="panel">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="row">
+                    <div class="col-md-12 col-xs-4">
+                        <div class="image_user_avatar_center mr-bt-10p">
+							@if (ViewBag.Avatar.Length > 100)
+							{
+								<img class="image_user_avatar" src="@ViewBag.Avatar" />
+							} else {
+								<img class="image_user_avatar" style="display: none;" src="/img/example.jpg">
+								<div class="photo_user_ava"><div class="photo_user_ava_2"><div class="photo_user_ava_3"></div></div></div>
+							}
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-8">
+                        <div class="visible-xs visible-sm mr-tp-10px" style="margin-bottom: 15px">
+                            <div class="ft_27px"><span class="js___user_name">@ViewBag.FirstName</span> <span class="js___user_surname">@ViewBag.LastName</span></div>
+                            <!--<div class="bt_3px"><b>32 года</b> <span class="italic">(д.р. 08.02.1987)</span></div>-->
+                            <div class="italic">Рейтинг: @ViewBag.Game.Rating</div>
+                        </div>
+                        <div class="user-info" id="mail">E-mail: @ViewBag.Email</div>
+                        <div class="user-info" id="phon">Телефон: @ViewBag.Phone</div>
+                        <div class="tx-center mr_bt_20px"><button class="btn-3" type="button" onclick="modal_open('manage_update_profile');">Редактировать профиль</button></div>
+                        <div class="tx-center mr_bt_20px"><button class="btn-3" type="button">Изменить дизайн</button></div>
+                        <iframe src="https://money.yandex.ru/quickpay/shop-widget?writer=seller&targets=%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%B8%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%2C%20%D0%BF%D1%83%D1%81%D1%82%D1%8C%20%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%B5%D1%82%D1%81%D1%8F%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D1%8B%D0%BC!&targets-hint=&default-sum=100&button-text=11&payment-type-choice=on&mobile-payment-type-choice=on&hint=&successURL=&quickpay=shop&account=410018333433406" width="423" height="250" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="hidden-xs hidden-sm mr-tp-10px">
+                            <div class="ft_27px"><span class="js___user_name">@ViewBag.FirstName</span> <span class="js___user_surname">@ViewBag.LastName</span></div>
+                            <div class="italic">Рейтинг: @ViewBag.Game.Rating</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="user-coins">
+                            <div class="user-coins-1">
+                                <div class="wd-33">БАЛАНС:</div>
+                                <div class="wd-33-2"><b class="js___user_chess_coins">@ViewBag.Account.ChessCoin</b></div>
+                                <div class="wd-33-3">ChessCoins</div>
+                            </div>
+                        </div>
+                        <div class="svg_flex-bt-10px">
+                            <a href="#" class="btn-5"><svg viewBox="0 0 576 512" class="svg-1-profile"><path fill="currentColor" d="M504.717 320H211.572l6.545 32h268.418c15.401 0 26.816 14.301 23.403 29.319l-5.517 24.276C523.112 414.668 536 433.828 536 456c0 31.202-25.519 56.444-56.824 55.994-29.823-.429-54.35-24.631-55.155-54.447-.44-16.287 6.085-31.049 16.803-41.548H231.176C241.553 426.165 248 440.326 248 456c0 31.813-26.528 57.431-58.67 55.938-28.54-1.325-51.751-24.385-53.251-52.917-1.158-22.034 10.436-41.455 28.051-51.586L93.883 64H24C10.745 64 0 53.255 0 40V24C0 10.745 10.745 0 24 0h102.529c11.401 0 21.228 8.021 23.513 19.19L159.208 64H551.99c15.401 0 26.816 14.301 23.403 29.319l-47.273 208C525.637 312.246 515.923 320 504.717 320zM403.029 192H360v-60c0-6.627-5.373-12-12-12h-24c-6.627 0-12 5.373-12 12v60h-43.029c-10.691 0-16.045 12.926-8.485 20.485l67.029 67.029c4.686 4.686 12.284 4.686 16.971 0l67.029-67.029c7.559-7.559 2.205-20.485-8.486-20.485z"></path></svg> Магазин</a>
+                            <a href="#" class="btn-5"><svg viewBox="0 0 512 512" class="svg-1-profile"><path fill="currentColor" d="M461.2 128H80c-8.84 0-16-7.16-16-16s7.16-16 16-16h384c8.84 0 16-7.16 16-16 0-26.51-21.49-48-48-48H64C28.65 32 0 60.65 0 96v320c0 35.35 28.65 64 64 64h397.2c28.02 0 50.8-21.53 50.8-48V176c0-26.47-22.78-48-50.8-48zM416 336c-17.67 0-32-14.33-32-32s14.33-32 32-32 32 14.33 32 32-14.33 32-32 32z"></path></svg>Вывести</a>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="container-fluid user-stat">
+                            <div class="row">
+                                <div class="col-md-6 mr_bt_20px">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="manage-panel-2"><span class="font-13px">Пройдено уроков:</span> <br><b class="count colors_line">@ViewBag.LessonsCnt</b></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="manage-panel-2"><span class="font-13px">Решено задач:</span> <br><b class="count colors_line">@ViewBag.PuzzlesCnt</b></div>
+                                        </div>
+                                    </div>
+                                    <div class="mr_bt_20px">
+                                        <canvas id="myChart-2"></canvas>
+                                        <script type="text/javascript">
+                                         var ctx = document.getElementById('myChart-2').getContext('2d');
+                                         var chart = new Chart(ctx, {
+                                             type: 'line',
+                                             data: {
+                                                 labels: [@Html.Raw(ViewBag.D)],
+                                                 datasets: [{
+                                                         label: 'Рейтинг игры',
+                                                 backgroundColor: 'rgb(255, 99, 132)',
+                                                 data: [@ViewBag.R]
+                                              }]
+                                            },
+                                         options: {}
+                                        });
+                                        </script>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <canvas id="myChart" width="100%" height="75px"></canvas>
+                                    <script type="text/javascript">
+                                        var ctx = document.getElementById('myChart').getContext('2d');
+                                        var chart = new Chart(ctx, {
+                                            type: 'pie',
+                                            data: {
+                                                labels: ['Ничья', 'Проиграно', 'Выиграно'],
+                                                datasets: [{
+                                                    label: 'Качество игры',
+                                                    backgroundColor: [ 'blue', 'red', 'green'],
+                                                    data: [@ViewBag.Game.Drows, @ViewBag.Game.Losses, @ViewBag.Game.Wins]
+                                                }],
+                                            },
+                                            options: {}
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal_manage_update_profile_wrapper" class="modal-wrapper">
+        <div class="c_modal w_auto">
+            <div class="modal__content">
+                <div class="form-wrapper">
+                    <div class="modal-type">Редактирование профиля</div>
+                    <form action="" class="pd_20px" method="post">
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="date_new">Имя</div>
+                                <div class="form-group">
+                                    <input type="text" class="input-1" name="user_name" value="@ViewBag.FirstName">
+                                </div>
+                                <div class="date_new">Фамилия</div>
+                                <div class="form-group">
+                                    <input type="text" class="input-1" name="user_surname" value="@ViewBag.LastName">
+                                </div>
+                                <div class="form-group">
+                                    <div class="date_new">Дата рождения</div>
+                                    <input type="date" class="input-1" name="date_of_birth" placeholder="Введите свою дату рождения">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="image_user_avatar_center">
+                                    <!--<img class="image_user_avatar width66" src="storage/images/1169354576.png">-->
+									@if (ViewBag.Avatar.Length > 100)
+									{
+										<img class="image_user_avatar" style="margin-top: 0;" src="@ViewBag.Avatar" />
+									} else {
+                                        <img class="image_user_avatar" style="display: none; margin-top: 0;" src="/img/example.jpg">
+										<div class="photo_user_ava"><div class="photo_user_ava_2"><div class="photo_user_ava_3"></div></div></div>
+									}
+                                </div>
+                                <button class="btn-3" type="button" onclick="update__user_avatar();">Изменить аватар</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+								<div class="date_new">Адрес электронной почты</div>
+                                <input type="email" class="input-1" name="user_email" placeholder="E-mail" value="@ViewBag.Email">
+                            </div>
+                            <div class="col-md-4">
+								<div class="date_new"> &nbsp;</div>
+                                <button class="btn-4" type="button" onclick="modal_open('manage_confirm_email');">Подтвердить</button>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-8">
+								<div class="date_new">Телефон</div>
+                                <input type="phone" class="input-1" name="user_phone" placeholder="Телефон" value="@ViewBag.Phone">
+                            </div>
+                            <div class="col-md-4">
+								<div class="date_new"> &nbsp;</div>
+                                <button class="btn-4" type="button" onclick="modal_open('manage_confirm_phone');">Подтвердить</button>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4 tx-right"><button type="button" class="btn-6" onclick="modal_close('manage_update_profile');">Отмена</button></div>
+                            <div class="col-md-4 tx-left"><button class="btn-10" type="button" onclick="modal_open('chenge_password_profile');">Сменить пароль</button></div>
+                            <div class="col-md-4 tx-left"><button class="btn-7" type="button" onclick="modal_SaveProfile();">Сохранить</button></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal_chenge_password_profile_wrapper" class="modal-wrapper">
+        <div class="c_modal w_auto">
+            <div class="modal__content">
+                <div class="form-wrapper modal-chenge-password">
+                    <div class="modal-type">Смена пароля</div>
+                    <form class="js___update_user_password" action="" method="post">
+                        <div class="pd_20px">
+                            <div class="mr-bt-10px"><input type="password" class="input-1" placeholder="Введите старый пароль"></div>
+                            <div class="mr-bt-10px"><input type="password" class="input-1" placeholder="Введите новый пароль"></div>
+                            <div class="mr-bt-10px"><input type="password" class="input-1" placeholder="Введите новый пароль"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="text-center">
+                                        <button type="button" class="btn-6 w-100" onclick="modal_close('chenge_password_profile');">Отмена</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="text-center mr-bt-10px">
+                                        <button type="button" class="btn-7">Изменить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal_manage_setting_avatar_wrapper" class="modal-wrapper">
+        <div class="c_modal w_auto">
+            <div class="modal__content">
+                <div class="form-wrapper">
+                    <div class="modal-type">Изменить аватар</div>
+                    <div class="pd_20px">
+                        <!--<div class="photo_us_1">
+                            <div class="photo_us_2">Перетащите фото сюда или нажмите "Обзор"</div>
+                        </div>-->
+                        <div class="tx-center mr_bt_20px">
+                            <input type="file" class="btn-3" id="select_image">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="cropp-demo">
+                                </div>
+                                <div class="user-avatar" id="image01_container">
+                                    @if (ViewBag.Avatar.Length > 100)
+									{
+										<img id="image01" src="@ViewBag.Avatar" class="cropper-hidden">
+									} else {
+										<img id="image01" src="/img/example.jpg" class="cropper-hidden">
+									}
+                                </div>
+                                <!--<div class="photo_us_3">Выберите миниатюру</div>-->
+                            </div>
+                            <div class="col-md-6">
+                                <div id="result"></div>
+                                <div class="photo_us_3">Предопросмотр миниатюры</div>
+                            </div>
+                        </div>
+                        <br>
+                        <form class="js___save_user_image form-horizontal" action="" method="post" enctype="multipart/form-data">
+                            <input type="hidden" id="save_image" class="form-control" name="image">
+                            <div class="tx-center mr_bt_20px">
+                                <button class="btn2 btn2-default" type="button" id="button">Применить</button>
+                            </div>
+                            <div class="tx-center mr_bt_20px">
+                                <button type="submit" class="btn-3 w-200px">Сохранить</button>
+                            </div>
+                            <div class="tx-center">
+                                <button class="btn-9" type="button" onclick="modal_close('manage_setting_avatar');">Отмена</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal_manage_confirm_phone_wrapper" class="modal-wrapper">
+        <div class="c_modal w_auto">
+            <div class="modal__content">
+                <div class="form-wrapper modal-sms">
+                    <div class="modal-type">Подтверждение телефона</div>
+                    <div class="pd_20px">
+                        <div class="type-info-modal">Введите код полученый по СМС</div>
+                        <div class="mr-bt-10px"><input class="input-1" name="confirm_phone"></div>
+                        <div class="text-center mr-bt-10px"><button class="btn-3 w-200px" onclick="confirm_phone();">Сохранить</button></div>
+                        <div class="text-center"><button class="btn-8 w-200px" onclick="send_confirm_phone();">Отправить код повторно</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal_manage_confirm_email_wrapper" class="modal-wrapper">
+        <div class="c_modal w_auto">
+            <div class="modal__content">
+                <div class="form-wrapper modal-sms">
+                    <div class="modal-type">Подтверждение почты</div>
+                    <div class="pd_20px">
+                        <div class="type-info-modal">Перейдите по ссылке отправленной на e-mail</div>
+                        <div class="mr-bt-10px"><input class="input-1" name="confirm_phone"></div>
+                        <div class="text-center mr-bt-10px"><button class="btn-3 w-200px" onclick="confirm_phone();">Сохранить</button></div>
+                        <div class="text-center"><button class="btn-7 w-200px" onclick="send_confirm_phone();">Отправить код повторно</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (ViewBag.Avatar.Length == 0)
+{
+    <script>
+        $(function () {
+            var name = $('.js___user_name').html();
+            var surname = $('.js___user_surname').html();
+            var demo_avatar = name[0] + ' ' + surname[0];
+            $('.photo_user_ava_3').html(demo_avatar);
+        });
+    </script>
+}
+<script type="text/javascript">
+    var cropper;
+
+    window.addEventListener('DOMContentLoaded', function () {
+        //modal_open('manage_setting_avatar')
+        //image_crop();
+    });
+
+    $('#select_image').on('change', function(e){
+        var el = e.target || window.event.srcElement,
+        files = el.files;
+
+        if ( ! ( FileReader && files && files.length ) )
+            console.log('FileReader Not supported');
+
+        var file_reader = new FileReader();
+        file_reader.onload = function () {
+            $('#image01').remove();
+            $('#result').html('');
+            $('#image01_container').html('');
+            var img = document.createElement('img');
+            img.id = "image01";
+            img.src = file_reader.result;
+            img.className = "cropper-hidden";
+            document.getElementById("image01_container").appendChild(img);
+            cropper.clear();
+            cropper.reset();
+            //cropper.destroy();
+            cropper = null;
+            image_crop();
+        }
+        file_reader.readAsDataURL(files[0]);
+    });
+    function image_crop(){
+        var image = document.getElementById('image01');
+        var button = document.getElementById('button');
+        var result = document.getElementById('result');
+        var save_image = document.getElementById('save_image');
+        var croppable = false;
+        cropper = new Cropper(image, {
+            aspectRatio: 1,
+            viewMode: 1,
+            ready: function () {croppable = true;}
+        });
+
+        button.onclick = function () {
+            var canvas;
+            var image_el;
+
+            if (!croppable) return;
+
+            canvas = cropper.getCroppedCanvas().toDataURL('image/jpeg', 0.1);
+
+            image_el = document.createElement('img');
+            image_el.src = canvas;
+            
+            save_image.setAttribute('value', canvas);
+            result.innerHTML = '';
+            result.appendChild(image_el);
+        };
+    };
+    $('.js___save_user_image').on('submit', function(e){
+        e.preventDefault();
+
+        var $form = $(this);
+        img_data = $form.find('#save_image').val();
+        if((img_data.length / 1024 / 1024) > 0.5) {
+            alert('Превышен максимальный размер файла,\n пожалуйста сделайте изображение меньше');
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("SaveUserImage")',
+            data: {
+                image: img_data
+            },
+            dataType: 'json',
+            success: function (res) {
+                if(!res) {
+                    return;
+                }
+                $('.photo_user_ava').hide();
+                $('.image_user_avatar').attr('src', res).show();
+                modal_close('manage_setting_avatar');
+            },
+            error: function (err) {
+                console.log('нет связи с сервером - ' + err);
+                modal_close('manage_setting_avatar');
+            }
+        });
+    });
+
+    function modal_SaveProfile()
+    {
+        var FirstName = $("input[name=user_name]").val();
+        var LastName = $("input[name=user_surname]").val();
+        var Email = $("input[name=user_email]").val();
+        var Phone = $("input[name=user_phone]").val();
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("SaveProfile")',
+            data: {
+                "FirstName": FirstName, "LastName": LastName,
+                "Email": Email, "Phone": Phone
+            },
+            dataType: 'json',
+            success: function (res) {
+				console.log(res);
+				if(res > 0) {
+					$('.js___user_chess_coins').html(res);
+				}
+                $(".js___user_name").text(FirstName);
+                $(".js___user_surname").text(LastName);
+                $("#mail").text("E-mail: " + Email);
+                $("#phon").text("Телефон: " + Phone);
+                $("input[name=user_name]").val(FirstName);
+                $("input[name=user_surname]").val(LastName);
+                $("input[name=user_email]").val(Email);
+                $("input[name=user_phone]").val(Phone);
+            },
+            error: function (emp) {
+                alert('error in SaveProfile');
+            }
+        });
+        modal_close('manage_update_profile');
+    }
+    function update__user_avatar(){
+        modal_open('manage_setting_avatar');
+        if(!cropper) {
+            image_crop();
+        }
+    }
+
+    function confirm_phone() {
+        modal_close('manage_confirm_phone');
+    }
+
+    function send_confirm_phone() {
+
+    }
+
+    function confirm_email() {
+        modal_close('manage_confirm_email');
+    }
+
+    function send_confirm_email() {
+
+    }
+</script>
+

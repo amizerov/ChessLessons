@@ -1,0 +1,35 @@
+﻿@model chess2.Models.CLesson
+
+@{
+    ViewBag.Title = "TopicsList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>$('#chess').css('background-color', '#4f66ac');</script>
+<script>$('#chess').css('border-radius', '15px');</script>
+
+<h2>Задания для урока <b>@Model.Name</b></h2>
+<style>
+    #Desc {
+        background-color: antiquewhite;
+        padding: 15px;
+        margin: 15px;
+        font-size: 22px;
+        border-radius: 22px;
+    }
+</style>
+<table>
+    <tr>
+        <td nowrap style="padding:22px" valign="top">
+    @foreach (var t in Model.Topics)
+    {
+        <a href="/Home/ChessL/@t.ID">@t.Name</a>
+            <br />
+    }
+        </td>
+        <td>
+            <div id="Desc" style="width:50%;height:350px;">
+                @Model.Description
+            </div>
+        </td>
+    </tr>
+</table>

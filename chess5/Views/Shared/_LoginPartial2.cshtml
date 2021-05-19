@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @style = "visability: hidden" }))
+    {
+        @Html.AntiForgeryToken()
+        
+            <!--<li>
+                @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+            </li>
+            <li>
+                <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            </li>
+            -->
+    }
+    <li class="main-sidebar__username">
+        <a href="/Manage">
+            <i class="fas fa-user"></i>
+            <span class="link-item">Профиль</span>
+        </a>
+    </li>
+    <div class="header__account">
+        <a class="btn2 btn2-default" href="javascript:document.getElementById('logoutForm').submit()">
+            <i class="fas fa-sign-out-alt"></i><span> Выйти</span>
+        </a>
+    </div>
+}
+else
+{
+    <div class="header__account">
+        <button class="btn2 btn2-default" onclick="modal_open('login');">
+            <i class="fas fa-sign-in-alt"></i><span> Войти</span></button>
+        <button class="btn2 btn2-default btn2--border" onclick="modal_open('register');">
+            <i class="fas fa-user-plus"></i><span> Регистрация</span></button>
+    </div>
+}
+

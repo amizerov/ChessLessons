@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = "играть в шахматы с живыми игроками";
+    ViewBag.GetRequest = "game";
+    ViewBag.ColContentClasses = "col-md-12";
+}
+    <div class="game-container">
+        <div class="rival">
+            <div class="rival-person active">
+            <input id="rival-human-input" type="radio" checked name="rival">
+                <div class="rival-icon"><i class="fas fa-user"></i></div>
+                <div class="rival-name">
+                    <span>Человек</span>
+                </div>
+            </div>
+            <div class="rival-person">
+            <input id="rival-pc-input" type="radio" name="rival">
+                <div class="rival-icon"><i class="fas fa-desktop"></i></div>
+                <div class="rival-name">
+                    <span>Компьютер</span>
+                </div>
+            </div>
+        </div>
+    <div class="rival-tabs gametime">
+        <div id="rival-human-tab" class="active">
+            <div class="human-private-container">
+                <a class="js__human_private_link">Сделать приватную игру</a>
+                <div class="js__human_private_alert alert alert-warning alert-dismissible" role="alert" style="display: none;margin-bottom: 5px;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Ошибка!</strong> Пароль должен находиться в пределе от 1000 до 9999
+                </div>
+            </div>
+        </div>
+        <div style="display: flex;flex-wrap: wrap;justify-content: center;">
+            <div>
+                <input id="tr1" class="radio_btn" checked type="radio" name="time_set" value="3_2" /><label for="tr1">3 | 2</label>
+            </div>
+            <div>
+                <input id="tr2" class="radio_btn" type="radio" name="time_set" value="5_5" /><label for="tr2">5 | 5</label>
+            </div>
+            <div>
+                <input id="tr3" class="radio_btn" type="radio" name="time_set" value="10_5" /><label for="tr3">10 | 5</label>
+            </div>
+            <div>
+                <input id="tr4" class="radio_btn" checked type="radio" name="time_set" value="15_5" /><label for="tr4">15 | 5</label>
+            </div>
+            <div>
+                <input id="tr5" class="radio_btn" type="radio" name="time_set" value="10" /><label for="tr5">10</label>
+            </div>
+            <div>
+                <input id="tr6" class="radio_btn" type="radio" name="time_set" value="15" /><label for="tr6">15</label>
+            </div>
+            <a onclick="StartGame()" class="btn-play">
+                Играть
+                <img src="~/img/playBtn-figure.png" alt="">
+            </a>
+        </div>
+    </div>
+</div>
+@if (User.Identity.IsAuthenticated)
+{
+    <script>var auth = true;</script>
+}
+else
+{
+    <script>var auth = false;</script>
+}
+<script>
+	/*$('.rival-person').click(function(){
+        $(".rival-person input").removeAttr("checked");
+        $(".rival-person").removeClass('active');
+        $(this).addClass('active');
+        $(this).find('input').attr('checked','checked');
+    });*/
+    $(function () {
+        $('.rival-person').click(function () {
+            $(".rival-person input").removeAttr("checked");
+            $(".rival-person").removeClass('active');
+            $(this).addClass('active');
+            $(this).find('input').attr('checked', 'checked');
+            if ($('#rival-human-input').is(':checked')) {
+                $('#rival-human-tab').addClass('active');
+            } else {
+                $('#rival-human-tab').removeClass('active');
+            }
+        });
+        $('.js__human_private_link').click(function (e) {
+            e.preventDefault();
+            $el = $(this);
+            if ($el.hasClass('active')) {
+                $el.removeClass('active');
+                $el.parent().find('.js__human_private_form').remove();
+                $('.js__human_private_alert').hide();
+            } else {
+                var pass = Math.round(1000 - 0.5 + Math.random() * (9999 - 1000 + 1));
+                console.log(pass);
+                $el.addClass('active');
+                $el.parent().append('<div class="js__human_private_form input-group"><div class="input-group-addon">Пароль</div> '
+                    + '<input type="number" name="game_password" value="' + pass + '" class="form-control" min="1000" max="9999"></div>');
+            }
+        });
+        $('.js__human_private_alert button').click(function (e) {
+            e.preventDefault();
+            $(this).closest('.js__human_private_alert').hide();
+            return false;
+        });
+    });
+    function StartGame()
+    {
+        var t = $(".radio_btn:checked").val().split('_'); 
+        var baseTime = t[0], increment = t[1];
+        var game_password = 0;
+
+        if ($('input[name="game_password"]')) {
+            game_password = Number($('input[name="game_password"]').val());
+
+            console.log(game_password);
+            if (game_password < 1000 || game_password > 9999) {
+                $('.js__human_private_alert').show();
+                return;
+            }
+        }
+
+        if ($('#rival-pc-input').is(':checked')) {
+            document.location.href = '/Game/Comp';
+            return;
+        }
+        if (auth !== true) { 
+			modal_open('login');
+			return; 
+		}
+
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("StartGame")',
+            data: { "BaseTime": baseTime, "Increment": increment },
+            dataType: 'json',
+            success: function (Game_ID) {
+                console.log(Game_ID);
+                if (Game_ID > 0) {
+                    document.location.href = '/Game/Human/' + Game_ID;
+                }
+            },
+            error: function (emp) {
+                alert('error in StartGame');
+            }
+        });
+    }
+</script>
+

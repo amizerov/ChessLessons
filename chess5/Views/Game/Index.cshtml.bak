@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "играть в шахматы с живыми игроками";
+    ViewBag.GetRequest = "game";
+    ViewBag.ColContentClasses = "col-md-12";
+}
+    <div class="game-container">
+        <div class="rival">
+            <div class="rival-person active">
+                <input type="radio" checked name="rival">
+                <div class="rival-icon"><i class="fas fa-user"></i></div>
+                <div class="rival-name">
+                    <span>Человек</span>
+                </div>
+            </div>
+            <div class="rival-person">
+                <input id="soperType" type="radio" name="rival">
+                <div class="rival-icon"><i class="fas fa-desktop"></i></div>
+                <div class="rival-name">
+                    <span>Компьютер</span>
+                </div>
+            </div>
+        </div>
+        <div class="gametime">
+            @if (Request.IsAuthenticated && ViewBag.FirstName.Length == 0)
+            {
+                <div style="padding-bottom:30px;">
+                    <b>В игре с человеком соперник может видеть ваш E-Mail</b>
+                    <b><a href="/Manage">Заполни Профиль и выбери Ник Нэйм.</a></b>
+                </div>
+            }
+            <div>
+                <input id="tr1" class="radio_btn" checked type="radio" name="time_set" value="3_2" /><label for="tr1">3 | 2</label>
+            </div>
+            <div>
+                <input id="tr2" class="radio_btn" type="radio" name="time_set" value="5_5" /><label for="tr2">5 | 5</label>
+            </div>
+            <div>
+                <input id="tr3" class="radio_btn" type="radio" name="time_set" value="10_5" /><label for="tr3">10 | 5</label>
+            </div>
+            <div>
+                <input id="tr4" class="radio_btn" checked type="radio" name="time_set" value="15_5" /><label for="tr4">15 | 5</label>
+            </div>
+            <div>
+                <input id="tr5" class="radio_btn" type="radio" name="time_set" value="10_0" /><label for="tr5">10</label>
+            </div>
+            <div>
+                <input id="tr6" class="radio_btn" type="radio" name="time_set" value="15_0" /><label for="tr6">15</label>
+            </div>
+            <a onclick="StartGame()" class="btn-play">
+                Играть
+                <img src="~/img/playBtn-figure.png" alt="">
+            </a>
+        </div>
+    </div>
+@if (User.Identity.IsAuthenticated)
+{
+    <script>var auth = true;</script>
+}else
+{
+    <script>var auth = false;</script>
+}
+<script>
+	$('.rival-person').click(function(){
+        $(".rival-person input").removeAttr("checked");
+        $(".rival-person").removeClass('active');
+        $(this).addClass('active');
+        $(this).find('input').attr('checked','checked');
+    });
+
+    function StartGame()
+    {
+        var t = $(".radio_btn:checked").val().split('_'); 
+        var baseTime = t[0], increment = t[1];
+
+        if ($('#soperType').is(':checked')) {
+            document.location.href = '/Game/Comp';
+            return;
+        }
+        if (auth !== true) { 
+			modal_open('login');
+			return; 
+		}
+
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("StartGame")',
+            data: { "BaseTime": baseTime, "Increment": increment },
+            dataType: 'json',
+            success: function (Game_ID) {
+                if (Game_ID > 0) {
+                    document.location.href = '/Game/Human/' + Game_ID;
+                }
+            },
+            error: function (emp) {
+                alert('error in StartGame');
+            }
+        });
+    }
+</script>
+

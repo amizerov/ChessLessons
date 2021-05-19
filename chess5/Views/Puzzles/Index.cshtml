@@ -1,0 +1,53 @@
+﻿@using chess5.Models;
+@model chess5.Models.PTemas
+@{
+    ViewBag.Title = "Шахматные задачи";
+    ViewBag.Description = "Шахматные задачи интересные для любого уровня";
+    ViewBag.GetRequest = "puzzle";
+    ViewBag.ColContentClasses = "col-md-12";
+}
+
+<div class="col-md-12" id="lesson-index">
+    <div class="content__title">
+        <h1>Задачи</h1>
+        <div style="float:right;background-color:antiquewhite;padding:10px;margin-top:-30px;margin-right:20px;color:cadetblue;font-size:20px;border-radius:11px">
+            На вашем счете: @CurrentUser.Account.ChessCoin <img class="chess-coin" src="./img/chess-coin3.svg">
+        </div>
+    </div>
+    <br /><br />
+    <div class="content__block">
+        @foreach (var t in Model)
+        {
+            <div class="content__panel flx_4">
+                <a class="lesson_link" href="/Puzzles/PTema/@t.ID">@t.Name</a>
+                <div style="padding-left:15px;margin-top:-15px;font-size:small;">Решено @t.Puzzles.SolvedBy(User.Identity.Name) из @t.Puzzles.Count</div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <script>var auth = true;</script>
+}
+else
+{
+    <script>var auth = false;</script>
+}
+
+<script>
+    function js_href(href) {
+        if (auth === true) {
+            document.location.href = href;
+        } else {
+            modal_open('login');
+        }
+    }
+    $('.lesson_link').on('click', function (e) {
+        if (auth !== true) {
+            e.preventDefault();
+            modal_open('login');
+        }
+    })
+</script>

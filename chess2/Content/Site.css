@@ -1,0 +1,84 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.btn-round {
+    width: 46px;
+    height: 46px;
+    border-radius: 46px;
+    padding: 0;
+}
+
+.btn-blue {
+    background-color: #2aa3d3;
+    border-top: 1px solid #097cb2;
+    border-left: 1px solid #097cb2;
+    border-right: 1px solid #097cb2;
+    border-bottom: 1px solid #097cb2;
+    box-shadow: 0 5px 0 #097cb2;
+    text-shadow: -1px -1px 0 #097cb2, 1px -1px 0 #097cb2, -1px 1px 0 #097cb2, 1px 1px 0 #097cb2;
+}
+
+.btn-orange {
+    background-color: #f6852a;
+    border-top: 1px solid #d86927;
+    border-left: 1px solid #d86927;
+    border-right: 1px solid #d86927;
+    border-bottom: 1px solid #d86927;
+    box-shadow: 0 5px 0 #d86927;
+    text-shadow: -1px -1px 0 #d86927, 1px -1px 0 #d86927, -1px 1px 0 #d86927, 1px 1px 0 #d86927;
+}
+
+.btn-grey {
+    background-color: #cdccca;
+    border-top: 1px solid #767471;
+    border-left: 1px solid #767471;
+    border-right: 1px solid #767471;
+    border-bottom: 1px solid #767471;
+    box-shadow: 0 5px 0 #767471;
+    text-shadow: -1px -1px 0 #767471, 1px -1px 0 #767471, -1px 1px 0 #767471, 1px 1px 0 #767471;
+}
+
+.btn {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    color: #fcfcfc;
+    padding: 0 10px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    line-height: 1;
+    font: bold 28px arial;
+}
+
+button:active, button:focus {
+    outline: none !important;
+}
+
+button::-moz-focus-inner {
+    border: 0 !important;
+}
+
+

@@ -1,0 +1,82 @@
+﻿@using chess5.Models
+@model chess5.Models.CNewsOfChessItem
+@{
+    ViewBag.Title = "События в мире шахмат - " + Model.Title;
+    ViewBag.Description = "Последние новости в мире шахмат - " + Model.Title;
+}
+
+<div class="col-lg-9 page--home_new">
+    <div class="panel">
+        <div class="row">
+            <div class="col-md-12 post" style="margin-bottom: 25px;">
+
+                <div class="post-head">
+                    @if (Model.ImgPath.Length > 0)
+                    {
+                    <div class="post-image">
+                        <img src="/img/news/@Model.ImgPath">
+                    </div>
+                    }
+                    <div class="post-head-meta">
+                        <h1 class="post-title">@Model.Title</h1>
+                        <div class="post-date">
+                            <p><i class="far fa-clock"></i> @Model.Date</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-content panel-w2"><p>@Html.Raw(Model.Text)</p></div>
+                
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-md-8">
+                <h4>Комментарии</h4>
+                <div class="post-comments">
+                    @foreach (CNewsItemComment c in Model.Comments)
+                    {
+                        <div class="post-comment panel-w2">
+                            <div class="comment-header">
+                                <span>Автор: @c.Author.NikName</span>
+                                <div class="comment-header-right">
+                                    <form onsubmit="if(confirm('Удалить?')){ return true }else{ return false }" action="/post/destroy_comment/2" method="post">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button type="submit" class="btn btn-link">Удалить <i class="far fa-trash-alt"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="comment-content">
+                                <p>@c.Message</p>
+                            </div>
+                        </div>
+                    }
+                    </div>
+                <div>
+                    <a class="anchor-link" name="add-comment"></a>
+                    <h4>Добавить комментарий</h4>
+                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    using (Html.BeginForm("Item", "News", FormMethod.Post))
+                    {
+                        <div class="form-group">
+                            <textarea class="form-control" name="message" placeholder="Комментарий"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input class="btn-3" style="width: auto;padding: 5px 15px;" type="submit" value="Отправить">
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div>
+                        <p>
+                            <a href="#" onclick="event.preventDefault();modal_open('login')"> Войдите в аккаунт</a>
+                            или <a href="#" onclick="event.preventDefault();modal_open('register')"> зарегистрируйтесь </a>
+                            чтобы оставить комментарий.
+                        </p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

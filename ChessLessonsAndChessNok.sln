@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28531.58
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "amGlobals", "amGlobals\amGlobals.csproj", "{A69600FB-8789-4A7F-AED7-F22B6AEE9AB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessLessons.ru", "chess5\ChessLessons.ru.csproj", "{7676114E-DE6D-4D94-A6FA-77091D36F0A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessNok.com", "chess3\ChessNok.com.csproj", "{72D0C626-A873-481E-95AA-5A33996CD8F6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Designer|Any CPU = Designer|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A69600FB-8789-4A7F-AED7-F22B6AEE9AB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A69600FB-8789-4A7F-AED7-F22B6AEE9AB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A69600FB-8789-4A7F-AED7-F22B6AEE9AB3}.Designer|Any CPU.ActiveCfg = Designer|Any CPU
+		{A69600FB-8789-4A7F-AED7-F22B6AEE9AB3}.Designer|Any CPU.Build.0 = Designer|Any CPU
+		{A69600FB-8789-4A7F-AED7-F22B6AEE9AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A69600FB-8789-4A7F-AED7-F22B6AEE9AB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7676114E-DE6D-4D94-A6FA-77091D36F0A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7676114E-DE6D-4D94-A6FA-77091D36F0A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7676114E-DE6D-4D94-A6FA-77091D36F0A5}.Designer|Any CPU.ActiveCfg = Debug|Any CPU
+		{7676114E-DE6D-4D94-A6FA-77091D36F0A5}.Designer|Any CPU.Build.0 = Debug|Any CPU
+		{7676114E-DE6D-4D94-A6FA-77091D36F0A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7676114E-DE6D-4D94-A6FA-77091D36F0A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72D0C626-A873-481E-95AA-5A33996CD8F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72D0C626-A873-481E-95AA-5A33996CD8F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72D0C626-A873-481E-95AA-5A33996CD8F6}.Designer|Any CPU.ActiveCfg = Debug|Any CPU
+		{72D0C626-A873-481E-95AA-5A33996CD8F6}.Designer|Any CPU.Build.0 = Debug|Any CPU
+		{72D0C626-A873-481E-95AA-5A33996CD8F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72D0C626-A873-481E-95AA-5A33996CD8F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {037E8152-4FBA-44A6-A2A0-F80A81C5FB01}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://server.ultrazoom.ru:8080/tfs/defaultcollection
+		SccProjectUniqueName0 = amGlobals\\amGlobals.csproj
+		SccProjectName0 = amGlobals
+		SccLocalPath0 = amGlobals
+		SccProjectUniqueName1 = chess5\\ChessLessons.ru.csproj
+		SccProjectName1 = chess5
+		SccLocalPath1 = chess5
+		SccProjectUniqueName2 = chess3\\ChessNok.com.csproj
+		SccProjectName2 = chess3
+		SccLocalPath2 = chess3
+		SccLocalPath3 = .
+	EndGlobalSection
+EndGlobal

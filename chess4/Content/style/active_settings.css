@@ -1,0 +1,40 @@
+
+.btns_settings button.active:before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 18px;
+    height: 18px;
+    background: #00579b;
+    border-radius: 50%;
+    border: 3px solid #0078d7;
+    box-shadow: 0px 0px 2px 0px #5c5c5c;
+    display: none;
+}
+
+.site_color--blue button.site_color--blue:before,
+.site_color--green button.site_color--green:before,
+.site_color--yellow button.site_color--yellow:before,
+
+.site_bg--default button.site_bg--default:before,
+.site_bg--1 button.site_bg--1:before,
+.site_bg--2 button.site_bg--2:before,
+.site_bg--3 button.site_bg--3:before,
+.site_bg--4 button.site_bg--4:before,
+.site_bg--5 button.site_bg--5:before,
+
+.cb_color--default button.cb_color--default:before,
+.cb_color--green button.cb_color--green:before,
+.cb_color--blue button.cb_color--blue:before,
+.cb_color--grey button.cb_color--grey:before,
+.cb_color--wood1 button.cb_color--wood1:before,
+.cb_color--wood2 button.cb_color--wood2:before,
+
+.cb_piece--tour_new button.cb_piece--tour_new:before,
+.cb_piece--chess24 button.cb_piece--chess24:before,
+.cb_piece--wikipedia button.cb_piece--wikipedia:before,
+.cb_piece--metro button.cb_piece--metro:before
+{
+    display: block;
+}

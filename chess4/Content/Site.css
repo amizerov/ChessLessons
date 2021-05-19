@@ -1,0 +1,120 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 580px;
+}
+
+.btns_settings .btn2 {
+    min-width: 100px;
+    min-height: 50px;
+    border: 1px solid #c2c2c2;
+    border-radius: 5px;
+    margin-right: 5px;
+    position: relative;
+}
+
+.btns_settings .btn2-with-image {
+    min-width: 150px;
+    min-height: 100px;
+}
+
+#modal_settings_wrapper {
+    padding-top: 100px;
+}
+
+ul.nav.nav-tabs {
+    background: #d0dbe2;
+    margin: 0 -10px;
+}
+
+.modal__content {
+    border: 1px solid #dadada;
+    padding: 10px;
+    padding-top: 0;
+}
+
+.btn2.has_sett:before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    right: -4px;
+    top: -4px;
+    background: #087615;
+    border-radius: 50%;
+    border: 1px solid #061f09;
+}
+
+.btn2-with-pieces span {
+    display: block;
+}
+
+.btn2-with-pieces img {
+    width: 49px;
+    margin-left: -20px;
+}
+
+.btn2-with-pieces img:first-child {
+    margin-left: 0;
+}
+
+.settings_form label {
+    margin-right: 15px;
+    margin-top: 15px;
+}
+
+.settings_form label input,
+.site_bg_upload_form label input {
+    margin-top: 5px;
+}
+
+form.settings_form,
+form.site_bg_upload_form {
+    padding: 15px;
+    margin: 15px 0;
+    background: #d0dbe2;
+}
+
+.btn2 .delete {
+    content: "-";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: -4px;
+    top: -4px;
+    background: #920909;
+    border-radius: 50%;
+    border: 1px solid #b3abab;
+    color: white;
+    font-weight: 900;
+    font-size: 21px;
+    line-height: 0.5;
+    padding-right: 1.7px;
+}
+
+.btn2 .delete:hover {
+    width: 20px;
+    height: 20px;
+    left: -6px;
+    top: -6px;
+    line-height: 0.7;
+}

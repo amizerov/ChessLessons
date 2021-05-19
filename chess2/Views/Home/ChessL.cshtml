@@ -1,0 +1,214 @@
+﻿<script>$('#chess').css('background-color', '#4f66ac');</script>
+<script>$('#chess').css('border-radius', '15px');</script>
+<style>
+    #Desc {
+        background-color: antiquewhite;
+        padding: 15px;
+        margin: 15px;
+        font-size: 22px;
+        border-radius: 22px;
+    }
+</style>
+<link rel="stylesheet" href="~/board/css/chessboard-0.3.0.css" />
+<script src="~/board/js/chessboard-0.3.0.js"></script>
+<script src="~/board/js/chess.js"></script>
+
+<br />
+<table width="100%" border="0">
+    <tr>
+        <td>
+            <div id="board" style="width: 600px"></div>
+            <br />
+            <p>Status: <span id="status"></span></p>
+            <p>FEN: <span id="fen"></span></p>
+        </td>
+        <td valign="top">
+            <table border="0" width="100%">
+                <tr><td><div id="Name" style="font-size:large;cursor:pointer" onclick="NextStep()"><h1>@ViewBag.Topic.Name</h1></div></td></tr>
+                <tr>
+                    <td>
+                        <div id="Desc" style="width:450px;height:350px;">
+                            @ViewBag.Topic.Description
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn btn-round btn-grey" id="BtnRestart" onclick="Restart()" disabled> < </button>&nbsp;&nbsp;
+                        <button class="btn btn-round btn-orange" id="BtnNext" onclick="NextStep()"> > </button>&nbsp;&nbsp;
+                        <button class="btn btn-round btn-blue" onclick="Help()"> ? </button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<br /><br />
+
+    <script>
+        var Topic_ID = @ViewBag.Topic.ID;
+        var stnumb = 0;
+        var step = 0, Step_ID = 0;
+        var move = 0, Move_ID = 0;
+
+        var curPosition = '@ViewBag.Topic.Position';
+        var board = ChessBoard('board', curPosition);
+        board.orientation('@ViewBag.Topic.Orientation');
+
+        function NextStep() {
+            $('#BtnNext').prop("disabled", true);
+            
+            Desc.innerText = "Загрузка ...";
+            GetStep(++stnumb);
+        }
+
+        function Restart()
+        {
+            $('#BtnRestart').prop("disabled", true);
+
+            Desc.innerText = "Загрузка ...";
+            GetStep(stnumb);
+        }
+    </script>
+
+<script>
+    function GetStep(stnumb) {
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetStep")',
+            data: { "Topic_ID": Topic_ID, "stepNumber": stnumb },
+            dataType: 'json',
+            success: function (res) {
+                Step_ID = res.ID;
+                if (Step_ID == 0) {
+                    if (res.NextTopicID == 0)
+                        document.location.href = '/ChessLessons';
+                    else
+                        document.location.href = '/home/ChessL/' + res.NextTopicID;
+                    return;
+                }
+
+                $('#Name').html('<h1>@ViewBag.Topic.Name<div style="visibility: hidden;font-size:1px">' + res.Name + '</div></h1>');
+                $('#Desc').html(res.Description);
+                curPosition = res.Position + ' ' + board.orientation()[0] + ' KQkq - 0 1';
+
+                init();
+            },
+            error: function (emp) {
+                alert('error in GetTopic');
+            }
+        });
+    }
+
+    function GetMoveResult(position) {
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetMoveResult")',
+            data: { "new_position_after_move": position, "Step_ID": Step_ID },
+            dataType: 'json',
+            success: function (res) {
+                $('#Desc').html(res.Description);
+                if ((res.Correctness != 1))
+                    $('#BtnRestart').removeAttr('disabled');
+                else
+                    $('#BtnNext').prop("disabled", false);
+            },
+            error: function (emp) {
+                alert('error');
+            }
+        });
+    }
+</script>
+
+<script>
+    var init = function () {
+        var game = new Chess();
+        var vf = game.validate_fen(curPosition);
+        if (!vf.valid) {
+            alert('Не правильно задана позиция!\n' + curPosition+'\n\rОшибка:'+vf.error);
+            return;
+        }
+        game.load(curPosition);
+
+        var statusEl = $('#status');
+        var fenEl = $('#fen');
+
+        // do not pick up pieces if the game is over
+        // only pick up pieces for the side to move
+        var onDragStart = function (source, piece, position, orientation) {
+            if (game.game_over() === true ||
+                (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+                (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+                return false;
+            }
+        };
+
+        var onDrop = function (source, target) {
+            // see if the move is legal
+            var move = game.move({
+                from: source,
+                to: target,
+                promotion: 'q' // NOTE: always promote to a queen for example simplicity
+            });
+
+            // illegal move
+            if (move === null) return 'snapback';
+
+            updateStatus();
+
+            GetMoveResult(game.fen());
+        };
+
+        // update the board position after the piece snap
+        // for castling, en passant, pawn promotion
+        var onSnapEnd = function () {
+            board.position(game.fen());
+        };
+
+        var updateStatus = function () {
+            var status = '';
+
+            var moveColor = 'White';
+            if (game.turn() === 'b') {
+                moveColor = 'Black';
+            }
+
+            // checkmate?
+            if (game.in_checkmate() === true) {
+                status = 'Game over, ' + moveColor + ' is in checkmate.';
+            }
+
+            // draw?
+            else if (game.in_draw() === true) {
+                status = 'Game over, drawn position';
+            }
+
+            // game still on
+            else {
+                status = moveColor + ' to move';
+
+                // check?
+                if (game.in_check() === true) {
+                    status += ', ' + moveColor + ' is in check';
+                }
+            }
+
+            statusEl.html(status);
+            fenEl.html(game.fen());
+            //pgnEl.html(game.pgn());
+        };
+
+        var cfg = {
+            draggable: true,
+            position: curPosition,
+            onDragStart: onDragStart,
+            onDrop: onDrop,
+            onSnapEnd: onSnapEnd,
+            orientation: '@ViewBag.Topic.Orientation'
+        };
+        board = ChessBoard('board', cfg);
+
+        updateStatus();
+    }
+
+</script>

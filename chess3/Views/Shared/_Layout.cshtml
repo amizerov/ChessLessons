@@ -1,0 +1,531 @@
+﻿<!DOCTYPE html>
+<html class="@(Request.Browser.IsMobileDevice && ViewBag.GetRequest == "game" ? "mobile" : "")">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134676932-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-134676932-1');
+    </script>
+
+    <!--script charset="UTF-8" src="//web.webpushs.com/js/push/55a3b2fd24cdac1d2c68cda174ee2525_1.js" async></script-->
+    <!-- webpushs убрать когда свое сделаем -->
+    <!--script src="//code-ya.jivosite.com/widget/FHVDti7on5" async></script-->
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <base href="~/">
+    <meta name="get_request" content="@ViewBag.GetRequest">
+    <title>@ViewBag.Title - Chess Lessons OnLine - Уроки шахмат для детей и начинающих онлайн</title>
+    <meta name="description" content="Шахматы для начинающих на русском языке онлайн. @ViewBag.Description" />
+    <meta name="keywords" content="шахматы для детей пешка король ферзь ладья конь слон шах мат пат дебют на русском языке">
+    <meta name="yandex-verification" content="5a01c0aaad8c2c24" />
+
+    <!--<link rel="stylesheet" type="text/css" href="~/Content/bootstrap-theme.min.css">-->
+    <link rel="stylesheet" type="text/css" href="~/Content/style/bootstrap_3_3.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/style/general.css?v=260">
+    <link rel="stylesheet" type="text/css" href="~/Content/style/active_settings.css?v=2">
+    <link rel="stylesheet" type="text/css" href="~/Content/style/colors.css?v=14">
+    <link rel="stylesheet" type="text/css" href="~/Content/Site.css?v=4">
+    <link rel="stylesheet" type="text/css" href="~/Content/style/icons.css?v=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script>
+        Notification.requestPermission(function (status) {
+            console.log('Notification permission status:', status);
+        });
+    </script>
+    <script type="text/javascript">
+        function getCookie(cn) {
+            var n = cn + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(n) === 0)
+                    return c.substring(n.length, c.length);
+            }
+            return '';
+        }
+        function main_sidebar_cookie() {
+            var c = getCookie("main_sidebar");
+            if (c === "collapsed")
+                document.getElementById("wrapper").className += " main-sidebar__collapsed";
+            else if (c === "default")
+                document.getElementById("wrapper").classList.remove("main-sidebar__collapsed");
+        }
+        const settingsSiteVals = {
+            site_color: ['site_color--blue', 'site_color--green', 'site_color--yellow'],
+            site_bg: ['site_bg--default', 'site_bg--1', 'site_bg--2', 'site_bg--3', 'site_bg--4', 'site_bg--5'],
+            cb_color: ['cb_color--default', 'cb_color--blue', 'cb_color--green', 'cb_color--grey', 'cb_color--wood1', 'cb_color--wood2'],
+            cb_piece: ['cb_piece--tour_new', 'cb_piece--chess24', 'cb_piece--wikipedia', 'cb_piece--metro']
+        };
+
+        const settingsSiteDef = {
+            site_color: 'site_color--blue',
+            site_bg: 'site_bg--4',
+            cb_color: 'cb_color--blue',
+            cb_piece: 'cb_piece--tour_new'
+        };
+
+        function setInitValues() {
+            var body = document.getElementsByTagName('body')[0];
+
+            if (settingsSiteVals.site_color.includes(localStorage['site_color']) === false)
+                localStorage['site_color'] = settingsSiteDef.site_color;
+
+            if (settingsSiteVals.cb_color.includes(localStorage['cb_color']) === false)
+                localStorage['cb_color'] = settingsSiteDef.cb_color;
+
+            if (settingsSiteVals.site_bg.includes(localStorage['site_bg']) === false)
+                localStorage['site_bg'] = settingsSiteDef.site_bg;
+
+            if (settingsSiteVals.cb_piece.includes(localStorage['cb_piece']) === false)
+                localStorage['cb_piece'] = settingsSiteDef.cb_piece;
+
+            if (localStorage['site_color']) {
+                body.classList.remove(settingsSiteVals.site_color);
+                body.classList.add(localStorage['site_color']);
+            }
+
+            if (localStorage['cb_color']) {
+                body.classList.remove(settingsSiteVals.cb_color);
+                body.classList.add(localStorage['cb_color']);
+            }
+
+            if (localStorage['site_bg']) {
+                body.classList.remove(settingsSiteVals.site_bg);
+                body.classList.add(localStorage['site_bg']);
+            }
+
+            if (localStorage['cb_piece']) {
+                body.classList.remove(settingsSiteVals.cb_piece);
+                body.classList.add(localStorage['cb_piece']);
+            }
+
+        }
+
+        function init() {
+            //getCbColorClass();
+            //getCbPieceClass();
+            //getSiteColorClass();
+            //getSiteBg();
+            setInitValues();
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css?family=Vollkorn:400,600,700&amp;subset=cyrillic" rel="stylesheet">
+    <!--
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    -->
+</head>
+<body class="site_color--blue site_bg--5 cb_color--blue cb_piece--tour_new">
+    <script type="text/javascript">init();</script>
+    <div id="wrapper" class="">
+        <script type="text/javascript">main_sidebar_cookie();</script>
+        <div class="m_header">
+            <div>
+                <ul class="nav">
+                    <li class="m_sidebar_open">
+                        <a>
+                            <i class="fas fa-bars"></i>
+                        </a>
+                    </li>
+                    <li class="m_sidebar_close">
+                        <a>
+                            <i class="fas fa-times"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div style="width: 115px;">
+                <a class="m_logo" href="/">
+                    <img src="~/img/new_logo2.png" />
+                </a>
+            </div>
+        </div>
+        <div class="main-wrapper with-bg">
+            <header class="sidebar-wrapper">
+                <div class="main-sidebar">
+                    <div>
+                        <a class="header__logo def-logo" href="/">
+                            <img src="~/img/new_logo2.png" />
+                        </a>
+                        <a class="header__logo min-logo" href="/">
+                            <img src="~/img/new_min_logo2.png" />
+                        </a>
+                    </div>
+                    <nav class="main-nav">
+                        <ul class="nav">
+                            <li>
+                                <a data-request="home" href="/">
+                                    <img src="~/img/icons/home.png" />
+                                    <span class="link-item">Главная</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a data-request="lesson" href="/Lessons">
+                                    <img src="~/img/icons/lesson.png" />
+                                    <span class="link-item">Уроки</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a data-request="puzzle" href="/Puzzles">
+                                    <img src="~/img/icons/puzle.png" />
+                                    <span class="link-item">Задачи</span>
+                                </a>
+                            </li>
+                            <li class="none---has-sub">
+                                <a data-request="game" href="/Game">
+                                    <img src="~/img/icons/game.png" />
+                                    <span class="link-item">Играть</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a data-request="blog" href="/News?page=0">
+                                    <img src="~/img/icons/blog.png" />
+                                    <span class="link-item">Новости</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    @Html.Partial("_LoginPartial2")
+                    <nav class="another-nav">
+                        <ul class="nav">
+                            <li class="sidebar-collapse">
+                                <a>
+                                    <i class="fas fa-chevron-left"></i>
+                                    <span class="link-item">Свернуть</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="modal_open('settings')">
+                                    <i class="fas fa-cog"></i>
+                                    <span class="link-item">Настройки</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+            <div class="content-wrapper container-fluid">
+                <main class="main-content">
+                    <div class="">
+                        <div class="col-content @ViewBag.ColContentClasses">
+                            <div class="panel @ViewBag.PanelClasses">
+                                @RenderBody()
+                            </div>
+                        </div>
+                        @RenderSection("Sidebar", false)
+                    </div>
+                </main>
+                <footer class="main-footer">
+                    <div class="">
+                        <div class="col-md-12">
+                            <ul class="footer-content">
+                                <li>
+                                    <span>&copy; 2019 - Chess Lessons - Уроки шахмат</span>
+                                </li>
+                                <li>
+                                    <a href="/user/politika"><span>Политика конфиденциальности</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <div id="modal_gameover_wrapper" class="modal-wrapper">
+        <div class="c_modal">
+            <div class="modal__close">
+                <span class="link-item">
+                    <img src="https://img.icons8.com/windows/22/000000/delete-sign.png">
+                </span>
+            </div>
+            <div class="modal__content">
+                <div class="form-wrapper">
+                    <p class="black">Вы поставили Мат компьютеру!</p>
+                    <p class="white">Компьютер поставил Вам Мат!</p>
+                    <a href="/game" class="btn btn-primary">Ок</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal_login_wrapper" class="modal-wrapper">
+        <div class="c_modal">
+            <div class="modal__close">
+                <span class="link-item">
+                    <img src="https://img.icons8.com/windows/22/000000/delete-sign.png">
+                </span>
+            </div>
+            <div class="modal__content">
+                <div class="form-wrapper">
+                    @Html.Partial("_LoginFormPartial", new chess5.Models.LoginViewModel())
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal_register_wrapper" class="modal-wrapper">
+        <div class="c_modal">
+            <div class="modal__close">
+                <span class="link-item">
+                    <img src="https://img.icons8.com/windows/22/000000/delete-sign.png">
+                </span>
+            </div>
+            <div class="modal__content">
+                <div class="form-wrapper">
+                    @Html.Partial("_RegisterFormPartial", new chess5.Models.RegisterViewModel())
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal_settings_wrapper" class="modal-wrapper">
+        <div class="c_modal w_auto">
+            <div class="modal__content">
+                <div class="form-wrapper">
+                    <div class="modal-type">Настройки</div>
+                    <div class="pd_20px">
+                        <div class="modal__close cancel__settings">
+                            <span class="link-item">
+                                <img src="https://img.icons8.com/windows/22/000000/delete-sign.png">
+                            </span>
+                        </div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Настройки сайта</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Настройки доски</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content btns_settings">
+                            <div role="tabpanel" class="tab-pane active" id="home">
+                                <div class="settings_color set_color" style="margin-top: 20px;">
+                                    <p><b>Цвет сайта</b></p>
+                                    <div class="row">
+                                        <div class="col-md-4"><button class="site_color--blue btn2 btn2-default" style="background-color: hsl(219, 36%, 55%);height: 30px;"></button></div>
+                                        <div class="col-md-4"><button class="site_color--green btn2 btn2-default" style="background-color: hsl(136, 36%, 55%);height: 30px;"></button></div>
+                                        <div class="col-md-4"><button class="site_color--yellow btn2 btn2-default" style="background-color: hsl(49, 97%, 87%);height: 30px;"></button></div>
+                                    </div>
+                                </div>
+                                <div class="set_bg text-center" style="margin-top: 20px;">
+                                    <p class="text-left"><b>Фоновое изображение</b></p>
+                                    <button class="site_bg--default btn2 btn2-default btn2-with-image" style="background-image: url(/img/set_bg/min-default.jpg);"></button>
+                                    <button class="site_bg--1 btn2 btn2-default btn2-with-image" style="background-image: url(/img/set_bg/min-1.jpg);"></button>
+                                    <button class="site_bg--2 btn2 btn2-default btn2-with-image" style="background-image: url(/img/set_bg/min-2.jpg);"></button>
+                                    <button class="site_bg--3 btn2 btn2-default btn2-with-image" style="background-image: url(/img/set_bg/min-3.jpg);"></button>
+                                    <button class="site_bg--4 btn2 btn2-default btn2-with-image" style="background-image: url(/img/set_bg/min-4.jpg);"></button>
+                                    <button class="site_bg--5 btn2 btn2-default btn2-with-image" style="background-image: url(/img/set_bg/min-5.jpg);"></button>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="profile">
+                                <div class="settings_color set_board text-left" style="margin-top: 20px;margin-bottom: 10px;">
+                                    <p><b>Цвет доски</b></p>
+                                    <div class="col-md-4">
+                                        <button class="cb_color--default btn2 btn2-default" style="height: 30px;"></button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button class="cb_color--green btn2 btn2-default" style="background-color: hsl(136, 36%, 55%);height: 30px;"></button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button class="cb_color--blue btn2 btn2-default" style="background-color: hsl(219, 36%, 55%);height: 30px;"></button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button class="cb_color--grey btn2 btn2-default" style="background-color: hsl(0, 0%, 61%);height: 30px;"></button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button class="cb_color--wood1 btn2 btn2-default" style="background-image: url(/board/bg/wood-d1.jpg);height: 30px;"></button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button class="cb_color--wood2 btn2 btn2-default" style="background-image: url(/board/bg/wood-d2.jpg);height: 30px;"></button>
+                                    </div>
+                                </div>
+                                <div class="text-center set_figure" style="margin-top: 20px;">
+                                    <p class="text-left"><b>Стиль фигур</b></p>
+                                    <button class="cb_piece--tour_new btn2 btn2-default btn2-with-pieces" )>
+                                        <span>Обычные</span>
+                                        <span>
+                                            <img src="/board/pieces/tour_new/bB.png">
+                                            <img src="/board/pieces/tour_new/bK.png">
+                                            <img src="/board/pieces/tour_new/bN.png">
+                                        </span>
+                                    </button>
+                                    <button class="cb_piece--chess24 btn2 btn2-default btn2-with-pieces">
+                                        <span>Объемные</span>
+                                        <span>
+                                            <img src="/board/pieces/chess24/bB.png">
+                                            <img src="/board/pieces/chess24/bK.png">
+                                            <img src="/board/pieces/chess24/bN.png">
+                                        </span>
+                                    </button>
+                                    <button class="cb_piece--wikipedia btn2 btn2-default btn2-with-pieces">
+                                        <span>Wiki</span>
+                                        <span>
+                                            <img src="/board/pieces/wikipedia/bB.png">
+                                            <img src="/board/pieces/wikipedia/bK.png">
+                                            <img src="/board/pieces/wikipedia/bN.png">
+                                        </span>
+                                    </button>
+                                    <button class="cb_piece--metro btn2 btn2-default btn2-with-pieces">
+                                        <span>Metro</span>
+                                        <span>
+                                            <img src="/board/pieces/metro/bB.png">
+                                            <img src="/board/pieces/metro/bK.png">
+                                            <img src="/board/pieces/metro/bN.png">
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button class="btn-6 accept__settings">Сохранить</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn-7 default__settings" onclick="setSettingsDeault();">По умолчанию</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn-4 cancel__settings2">Отмена</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal_no_money_wrapper" class="modal-wrapper">
+        <div class="c_modal w_auto">
+            <div class="modal__close">
+                <span class="link-item">
+                    <img src="https://img.icons8.com/windows/22/000000/delete-sign.png">
+                </span>
+            </div>
+            <div class="modal__content">
+                <div class="form-wrapper">
+                    <h3><i class="fas fa-minus-circle"></i> На вашем счету не хватает "Chess Coins" для прохождения урока</h3>
+                    <h4>Для получения "Chess Coins": </h4>
+                    <p><a href="/Game"><i class="fas fa-chess"></i> играйте в шахматы</a></p>
+                    <p><a href="/Puzzles"><i class="fas fa-tasks"></i> решайте задачи</a></p>
+                    <p><a href="#"><i class="fas fa-wallet"></i> пополните внутренний счет</a></p>
+                    <p><a href="/Manage"><i class="fas fa-user"></i> заполните профиль</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+            m[i].l = 1 * new Date(); k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+        })
+            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(51687389, "init", {
+            id: 51687389,
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true,
+            webvisor: true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/51687389" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+    <!--@Scripts.Render("~/bundles/jquery")-->
+    <!--@Scripts.Render("~/bundles/bootstrap")-->
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    @if (ViewBag.ShowNotes == false)
+    {
+        <script type="text/javascript">var show_notes = false;</script>
+    }
+    else
+    {
+        <script type="text/javascript">var show_notes = true;</script>
+    }
+
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript" src="~/Scripts/script/script.js?v=143"></script>
+    <!--<script src="~/Scripts/bootstrap.min.js"></script>-->
+
+    <script>
+        $(function () {
+            function addNoteHasNewGame(user) {
+                if (user.Avatar && user.Avatar.length > 0) {
+                    var avatar = '<img class="image_user_avatar" src="' + user.Avatar + '" id="alert_games_4">'
+                } else {
+                    var avatar = '<div class="photo_user_ava_v2 alert_games_5"><div class="photo_user_ava_2"><div class="photo_user_ava_3">' + user.Sopernik[0] + '</div></div></div>'
+                }
+
+                note({
+                    content:
+                        '<div class="flex_style">' +
+                        '<div class="alert_games_2">' +
+                        '<div class="image_user_avatar_center alert_games_3">' + avatar + '</div>' +
+                        //'<div class="alert_games_6">Рейтинг: 3700</div>'+
+                        '</div>' +
+                        '<div class="alert_games_7">' +
+                        '<div class="alert_games_8">Новый вызов</div>' +
+                        '<div class="alert_games_9">на игру ' + user.BaseTime + ' | ' + user.Increment + ' от <br>' + user.Sopernik + '</div>' +
+                        '<a href="/Game/Human/' + user.ID + '" class="alert_games_10">Принять</a>' +
+                        '</div>' +
+                        '</div>',
+                    type: "info", time: 15
+                });
+            }
+            function wsHasNewGame() {
+                var notificationhub = $.connection.notificationHub;
+
+                notificationhub.client.hasNewGame = function (data) {
+                    console.log(['wsHasNewGame', data])
+                    if (data.ID > 0) {
+                        addNoteHasNewGame(data);
+                    }
+                };
+
+                $.connection.hub.start();
+            }
+            if (show_notes != false) {
+                wsHasNewGame();
+            }
+            function CheckForNewGame() {
+                if (show_notes == false) return;
+                $.ajax({
+                    type: 'GET',
+                    url: '/Home/CheckForNewGame',
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.ID > 0) {
+                            addNoteHasNewGame(res);
+                        }
+                    },
+                    error: function (emp) {
+                        console.log('нет связи с сервером');
+                    }
+                });
+            }
+            //CheckForNewGame();
+            //setInterval(CheckForNewGame, 5000);
+
+        });
+    </script>
+
+    <script>
+                //var i = "https://chesslessons.ru/" == document.location.href ? 1 : 1;
+                //$('.main-wrapper.with-bg').css('background-image', 'linear-gradient(0deg, #ddd, #ddd)');
+                //$('.main-wrapper.with-bg').css('background-image', 'linear-gradient(0deg, #d7d7d7, #dedede)');
+                //$('.main-wrapper.with-bg').css('background-image', 'linear-gradient(45deg, rgba(175, 122, 78, 0.42), rgba(99, 127, 182, 0.42)),  url("/img/bg' + i + '.jpg")');
+                //$('.col-content > .panel.with-bg').css('background-image','linear-gradient(45deg, rgba(93, 53, 20, 0.52), rgba(33, 53, 93, 0.66)),  url("/img/bg' + i + '.jpg")');
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "События в мире шахмат";
+    ViewBag.Description = "Последние новости в мире шахмат.";
+}
+@model chess5.Models.CNewsOfChess
+@using chess5.Models;
+<div class="col-lg-12" id="posts">
+    <!--div class="content__title">
+        <h1>Блог</h1>
+    </div-->
+    <div class="posts-catalog">
+        <div class="posts row">
+            @foreach (CNewsOfChessItem itm in Model)
+            {
+                <div class="col-md-6 news-card" style="margin-bottom: 30px;">
+                    <div class="panel-w2">
+                        @if (itm.ImgPath.Length > 0)
+                        {
+                            <div class="news-image">
+                                <a href="/News/Item/@itm.ID">
+                                    <img src="/img/news/@itm.ImgPath">
+                                </a>
+                            </div>
+                        }
+                        <div class="news-card-content">
+                            <h4><a class="news-title" href="/News/Item/@itm.ID">@itm.Title</a></h4>
+                            <div class="post-date">
+                                <p><small><i class="far fa-clock"></i> @itm.Date</small></p>
+                            </div>
+                            <div class="news-short-desc"><p>@Html.Raw(itm.Text.Substring(0, 250)) ...</p></div>
+                            <a href="/News/Item/@itm.ID" class="btn-link">Подробнее...</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            }
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="pagination" role="navigation">
+                    @for (int i = 0; i < Model.NumberOfPages; i++)
+                    {
+                        if (i == Model.CurrentPage)
+                        {
+                    <li class="active" aria-current="page"><span>@(i+1)</span></li>
+                        }
+                        else
+                        {
+                    <li><a href="/News?page=@i">@(i+1)</a></li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
