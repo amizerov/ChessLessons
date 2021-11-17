@@ -423,7 +423,7 @@
                     modal_close('waiting_player');
 
                     sopernik.html(res.NikName + ' (' + res.Rating + ')');
-                    if (res.Avatar.length > 100)
+                    if (res.Avatar && res.Avatar.length > 100)
                         $('#SopernikAvatar').attr('src', res.Avatar);
 
                     SopernikTuta = true;
