@@ -334,8 +334,11 @@
     <Content Include="Content\style\general.css" />
     <Content Include="Content\style\icons.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\arrow-right.png" />
     <Content Include="img\bg1.jpg" />
     <Content Include="img\bg2.jpg" />
     <Content Include="img\bg4.jpg" />
@@ -360,16 +363,19 @@
     <Content Include="img\clock.png" />
     <Content Include="img\crown.png" />
     <Content Include="img\error.mp3" />
+    <Content Include="img\error1.mp3" />
     <Content Include="img\example.jpg" />
     <Content Include="img\icons\blog.png" />
     <Content Include="img\icons\game.png" />
     <Content Include="img\icons\home.png" />
     <Content Include="img\icons\lesson.png" />
     <Content Include="img\icons\puzle.png" />
+    <Content Include="img\locked.png" />
     <Content Include="img\Logo1.png" />
     <Content Include="img\Logo2.png" />
     <Content Include="img\mate1.mp3" />
     <Content Include="img\mate2.mp3" />
+    <Content Include="img\move2.mp3" />
     <Content Include="img\News\1.JPG" />
     <Content Include="img\News\14.png" />
     <Content Include="img\News\15.png" />
@@ -407,6 +413,9 @@
     <Content Include="img\set_bg\min-default.jpg" />
     <Content Include="img\social.png" />
     <Content Include="img\standUp.mp3" />
+    <Content Include="img\standUp1.mp3" />
+    <Content Include="img\standUp2.mp3" />
+    <Content Include="img\StartGame1.mp3" />
     <Content Include="img\tour2.JPG" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -437,6 +446,14 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -528,10 +545,14 @@
     <Content Include="Views\Blog\Index.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\News\Item.cshtml" />
+    <Content Include="Views\Shared\_LayoutNew.cshtml" />
+    <Content Include="Views\Shared\_Layout.New.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial3.cshtml" />
+    <Content Include="Views\Game\IsOpen.cshtml" />
+    <Content Include="Views\Game\IndexNew.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="fonts\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
