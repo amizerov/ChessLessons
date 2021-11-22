@@ -10,7 +10,7 @@ namespace chess5.Models
 {
     public class CPerson
     {
-        string _last_name, _first_name, _phone, _email, _avatar;
+        string _last_name, _first_name, _date_of_dirth, _phone, _email, _avatar;
         public string User_ID { get; set; }
         public int Rating
         {
@@ -50,6 +50,15 @@ namespace chess5.Models
                 }
                 _last_name = value;
                 G.db_exec("update AspNetUsers set LastName = '{1}' where Id = '{2}'", _last_name, CurrentUser.ID);
+            }
+        }
+        public string DateOfBirth
+        {
+            get { return _date_of_dirth; }
+            set
+            {
+                _date_of_dirth = value;
+                G.db_exec($"update AspNetUsers set DateOfBirth = '{_date_of_dirth}' where Id = '{CurrentUser.ID}'");
             }
         }
         public string Phone
@@ -100,6 +109,7 @@ namespace chess5.Models
             {
                 _first_name = r["FirstName"].ToString();
                 _last_name = r["LastName"].ToString();
+                _date_of_dirth = r["DateOfBirth"].ToString();
                 _phone = r["PhoneNumber"].ToString();
                 _email = r["Email"].ToString();
                 _avatar = r["Avatar"].ToString();

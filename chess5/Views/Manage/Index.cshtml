@@ -132,7 +132,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="date_new">Дата рождения</div>
-                                    <input type="date" class="input-1" name="date_of_birth" placeholder="Введите свою дату рождения">
+                                    <input type="date" class="input-1" name="date_of_birth" placeholder="Введите свою дату рождения" value="@ViewBag.DateOfBirth">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -396,6 +396,7 @@
     {
         var FirstName = $("input[name=user_name]").val();
         var LastName = $("input[name=user_surname]").val();
+        var DateOfBirth = $("input[name=date_of_birth]").val();
         var Email = $("input[name=user_email]").val();
         var Phone = $("input[name=user_phone]").val();
 
@@ -403,7 +404,7 @@
             type: 'POST',
             url: '@Url.Action("SaveProfile")',
             data: {
-                "FirstName": FirstName, "LastName": LastName,
+                "FirstName": FirstName, "LastName": LastName, "DateOfBirth": DateOfBirth,
                 "Email": Email, "Phone": Phone
             },
             dataType: 'json',

@@ -26,9 +26,9 @@ namespace chess4.Controllers.chess
             return View();
         }
 
-        // POST: Settings/Create
+        // POST: Settings/Save
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Save(FormCollection collection)
         {
             try
             {

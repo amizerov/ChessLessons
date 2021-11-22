@@ -333,6 +333,12 @@
     <Content Include="Content\style\colors.css" />
     <Content Include="Content\style\general.css" />
     <Content Include="Content\style\icons.css" />
+    <Content Include="Docs\todo_Chat.txt" />
+    <Content Include="Docs\todo_Coins.txt" />
+    <Content Include="Docs\todo_Db.txt" />
+    <Content Include="Docs\todo_Game.txt" />
+    <Content Include="Docs\todo_Lesson.txt" />
+    <Content Include="Docs\todo_Promo.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

@@ -50,10 +50,11 @@ namespace chess5.Controllers
             }
         }
 
-        public JsonResult SaveProfile(string FirstName, string LastName, string Email, string Phone)
+        public JsonResult SaveProfile(string FirstName, string LastName, string DateOfBirth, string Email, string Phone)
         {
             CurrentUser.Person.FirstName = FirstName;
             CurrentUser.Person.LastName = LastName;
+            CurrentUser.Person.DateOfBirth = DateOfBirth;
             CurrentUser.Person.Email = Email;
             CurrentUser.Person.Phone = Phone;
 
@@ -87,6 +88,7 @@ namespace chess5.Controllers
             l = (l == "") ? e.Substring(e.IndexOf('@') + 1, e.IndexOf('.', e.IndexOf('@')) - e.IndexOf('@') - 1) : l;
             ViewBag.FirstName = f.Substring(0, 1).ToUpper() + f.Substring(1);
             ViewBag.LastName = l.Substring(0, 1).ToUpper() + l.Substring(1);
+            ViewBag.DateOfBirth = p.DateOfBirth;
             ViewBag.Phone = p.Phone;
             ViewBag.Email = p.Email;
             ViewBag.Avatar = p.Avatar;
